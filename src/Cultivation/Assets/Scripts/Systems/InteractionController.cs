@@ -35,7 +35,9 @@ namespace Cultivation.Systems
             }
 
             var kb = Keyboard.current;
-            if (kb != null && kb.eKey.wasPressedThisFrame && _current != null && _current.CanInteract)
+            // UIClosedFrame 가드: GameManager가 이 프레임에 UI를 닫았을 경우 E 재진입 방지
+            bool justClosed = _gameManager != null && Time.frameCount <= _gameManager.UIClosedFrame;
+            if (kb != null && kb.eKey.wasPressedThisFrame && _current != null && _current.CanInteract && !justClosed)
             {
                 _current.OnInteract(_gameManager);
             }

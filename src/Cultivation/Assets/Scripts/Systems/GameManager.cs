@@ -43,6 +43,8 @@ namespace Cultivation.Systems
         public UIController UI => _uiController;
 
         public bool IsUIModeActive { get; private set; }
+        /// <summary>UI가 닫힌 프레임 번호. InteractionController가 같은 프레임 재진입을 막는 데 사용.</summary>
+        public int UIClosedFrame { get; private set; } = -1;
         public event Action<bool> OnUIModeChanged;
 
         private int _uiActivatedFrame = -1;
@@ -94,6 +96,7 @@ namespace Cultivation.Systems
             if (IsUIModeActive == active) return;
             IsUIModeActive = active;
             if (active) _uiActivatedFrame = Time.frameCount;
+            else UIClosedFrame = Time.frameCount;
             ApplyCursor(active);
             OnUIModeChanged?.Invoke(active);
         }

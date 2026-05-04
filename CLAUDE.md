@@ -38,20 +38,20 @@ Each agent owns a specific domain, enforcing separation of concerns and quality.
 
 @.claude/docs/coordination-rules.md
 
-## Collaboration Protocol
+## Collaboration Protocol (B타입)
 
-**User-driven collaboration, not autonomous execution.**
-Every task follows: **Question -> Options -> Decision -> Draft -> Approval**
+**Auto-mode 기본**: AI는 묻지 않고 진행한다. 아래 예외만 멈춘다.
 
-- Agents MUST ask "May I write this to [filepath]?" before using Write/Edit tools
-- Agents MUST show drafts or summaries before requesting approval
-- Multi-file changes require explicit approval for the full changeset
-- No commits without user instruction
+**멈추고 확인하는 3가지:**
+1. 되돌릴 수 없는 파괴적 조작 (파일 삭제, DB 드롭, force push)
+2. 아키텍처 결정 — 옵션 A/B/C + 장단점 제시 후 사용자 선택 대기
+3. Phase 전환처럼 큰 작업 — Plan mode에서 계획 합의 후 구현
 
-See `docs/COLLABORATIVE-DESIGN-PRINCIPLE.md` for full protocol and examples.
+**커밋**: auto-commit 훅이 세션 종료 시 자동 처리. 사용자 지시 불필요.
 
-> **First session?** If the project has no engine configured and no game concept,
-> run `/start` to begin the guided onboarding flow.
+**Unity MCP**: `mcp__UnityMCP__*` 도구로 직접 Editor 조작. 핸드오프 문서는 MCP 불가 작업(에셋 임포트, Play 검증)에만 사용.
+
+**큰 작업**: Plan mode(`/plan`) 먼저 → 계획 합의 → 구현. 복잡도 기준: 파일 3개 이상 동시 변경 또는 아키텍처 영향.
 
 ## Workflow
 
@@ -82,6 +82,12 @@ Sprint 시스템 폐지, continuous flow.
 ## Context Management
 
 @.claude/docs/context-management.md
+
+## Error Patterns & Lessons
+
+반복 실수 방지 기록:
+
+@tasks/lessons.md
 
 ## Working Principles
 

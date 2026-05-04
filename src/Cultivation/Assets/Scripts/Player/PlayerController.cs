@@ -25,18 +25,19 @@ namespace Cultivation.Gameplay
 
             float x = (kb.dKey.isPressed ? 1f : 0f) - (kb.aKey.isPressed ? 1f : 0f);
             float z = (kb.wKey.isPressed ? 1f : 0f) - (kb.sKey.isPressed ? 1f : 0f);
+            Vector3 horizontal = new Vector3(x, 0f, z).normalized * _moveSpeed;
 
-            Vector3 move = new Vector3(x, 0f, z).normalized * _moveSpeed;
-            _controller.Move(move * Time.deltaTime);
-
-            if (_controller.isGrounded && _velocity.y < 0f)
-                _velocity.y = -2f;
-
-            if (_controller.isGrounded && kb.spaceKey.wasPressedThisFrame)
-                _velocity.y = Mathf.Sqrt(_jumpHeight * -2f * _gravity);
+            if (_controller.isGrounded)
+            {
+                if (_velocity.y < 0f) _velocity.y = -2f;
+                if (kb.spaceKey.wasPressedThisFrame)
+                    _velocity.y = Mathf.Sqrt(_jumpHeight * -2f * _gravity);
+            }
 
             _velocity.y += _gravity * Time.deltaTime;
-            _controller.Move(_velocity * Time.deltaTime);
+
+            Vector3 motion = horizontal + new Vector3(0f, _velocity.y, 0f);
+            _controller.Move(motion * Time.deltaTime);
         }
     }
 }

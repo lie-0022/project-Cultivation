@@ -372,11 +372,6 @@ namespace Cultivation.UI
                 if (selected) pick.AddToClassList("convert-pick--active");
                 if (count == 0) pick.AddToClassList("convert-pick--disabled");
 
-                var art = new VisualElement();
-                art.AddToClassList("pic-md");
-                art.AddToClassList($"pic-crop--{artKey}");
-                pick.Add(art);
-
                 string labelText = selected ? $"{crop.CropName} ×{count}  ✓" : $"{crop.CropName} ×{count}";
                 var label = new Label(labelText);
                 label.AddToClassList("t-medium");

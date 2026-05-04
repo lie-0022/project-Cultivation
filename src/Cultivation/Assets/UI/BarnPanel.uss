@@ -200,13 +200,12 @@
     flex-direction: row;
     align-items: center;
     padding: 6px 10px;
-    border-radius: 999px;
+    border-radius: 8px;
     margin-right: 8px;
     background-color: var(--color-panel-bg-strong);
-    border-width: 2px;
-    border-color: transparent;
+    border-width: 0;
 }
-.convert-pick--active { border-color: var(--color-accent-farm); }
+.convert-pick--active { background-color: rgba(107, 68, 35, 0.10); }
 .convert-pick .pic-md { width: 22px; height: 22px; border-radius: 11px; margin-right: 6px; }
 
 .convert-spacer { flex-grow: 1; }

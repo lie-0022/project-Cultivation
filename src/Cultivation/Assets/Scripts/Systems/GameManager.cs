@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Cultivation.Systems
 {
     /// <summary>
-    /// 게임 전체 진입점. 모든 매니저의 인스턴스를 보유하고, FarmManager 등 Tick이 필요한 매니저를 Update에서 호출한다.
+    /// 게임 전체 진입점. 모든 매니저의 인스턴스를 보유하고, Tick이 필요한 매니저(Farm, Breeding)를 Update에서 호출한다.
     /// 싱글톤 정적 참조는 사용하지 않으며, 다른 컴포넌트는 Scene에서 GameManager 참조를 직접 받아야 한다.
     /// </summary>
     public class GameManager : MonoBehaviour
@@ -13,6 +13,9 @@ namespace Cultivation.Systems
         [SerializeField] private int _startingGold = 200;
         [SerializeField] private int _startingFarmPlots = 2;
         [SerializeField] private int _startingBarnSlots = 2;
+
+        [Header("교배 설정")]
+        [SerializeField] private float _selfCloneTime = 30f;
 
         [Header("Configs")]
         [SerializeField] private GachaConfig _gachaConfig;
@@ -25,6 +28,7 @@ namespace Cultivation.Systems
         public BarnManager Barn { get; private set; }
         public CreatureManager Creature { get; private set; }
         public FarmManager Farm { get; private set; }
+        public BreedingManager Breeding { get; private set; }
 
         public GachaConfig GachaConfig => _gachaConfig;
         public ExpansionConfig ExpansionConfig => _expansionConfig;
@@ -42,11 +46,14 @@ namespace Cultivation.Systems
             Barn = new BarnManager(Economy, _expansionConfig, _startingBarnSlots);
             Creature = new CreatureManager(Inventory, Barn, _dataRegistry);
             Farm = new FarmManager(Inventory, Economy, _expansionConfig, _dataRegistry, _startingFarmPlots);
+            Breeding = new BreedingManager(Barn, _dataRegistry, _selfCloneTime);
         }
 
         private void Update()
         {
-            Farm?.Tick(Time.deltaTime);
+            float dt = Time.deltaTime;
+            Farm?.Tick(dt);
+            Breeding?.Tick(dt);
         }
     }
 }

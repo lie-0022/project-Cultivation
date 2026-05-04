@@ -45,14 +45,10 @@ namespace Cultivation.UI
 
         private BarnTab _currentTab = BarnTab.Convert;
         private GameManager _gm;
-        // 씬의 BarnSlotInteractable 수 — 잠긴 슬롯 placeholder 렌더 상한.
-        private int _visibleMaxSlots;
 
         public void Initialize(GameManager gm)
         {
             _gm = gm;
-            var sceneSlots = Object.FindObjectsByType<BarnSlotInteractable>(FindObjectsSortMode.None);
-            _visibleMaxSlots = Mathf.Max(gm.Barn.Slots.Count, sceneSlots.Length);
 
             var root = _document.rootVisualElement;
             _closeBtn = root.Q<Button>("CloseBtn");
@@ -265,29 +261,6 @@ namespace Cultivation.UI
                     slotEl.Add(card);
                 }
 
-                _barnGrid.Add(slotEl);
-            }
-
-            // 잠긴 슬롯 placeholder — 씬 슬롯 수까지 채움
-            int unlocked = _gm.Barn.Slots.Count;
-            int lockedCount = Mathf.Max(0, _visibleMaxSlots - unlocked);
-            for (int i = 0; i < lockedCount; i++)
-            {
-                var slotEl = new VisualElement();
-                slotEl.AddToClassList("creature-slot");
-
-                var card = new VisualElement();
-                card.AddToClassList("creature-card");
-                card.AddToClassList("creature-card--empty");
-                card.AddToClassList("creature-card--locked");
-
-                var lockLabel = new Label("잠김");
-                lockLabel.AddToClassList("t-medium");
-                lockLabel.AddToClassList("t-sm");
-                lockLabel.AddToClassList("empty-text");
-                card.Add(lockLabel);
-
-                slotEl.Add(card);
                 _barnGrid.Add(slotEl);
             }
         }

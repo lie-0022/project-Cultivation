@@ -68,7 +68,7 @@
 }
 .creature-card--empty {
     background-color: rgba(255, 246, 229, 0.5);
-    border-style: dashed;     /* USS는 dashed 미지원 — solid로 fallback. /* HTML-only */ */
+    border-style: solid; /* USS는 dashed 미지원 — solid fallback */
     border-color: var(--color-divider);
     align-items: center;
     justify-content: center;
@@ -76,16 +76,6 @@
 .empty-text { color: var(--color-text-muted); }
 
 .creature-card--busy { opacity: 0.7; }
-
-.creature-card--locked {
-    background-color: rgba(200, 200, 200, 0.25);
-    border-color: rgba(120, 120, 120, 0.4);
-    opacity: 0.6;
-}
-.creature-card--locked .empty-text {
-    color: rgba(80, 80, 80, 0.9);
-    -unity-font-style: bold;
-}
 
 .creature-name { flex-grow: 1; margin-left: 12px; color: var(--color-text-primary); }
 .creature-sub { margin-left: 12px; }

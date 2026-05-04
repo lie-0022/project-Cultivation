@@ -1,0 +1,398 @@
+{
+  "$schema": "scene-data v1",
+  "scene": {
+    "name": "MainScene",
+    "origin": [0, 0, 0],
+    "size": [30, 0, 30],
+    "unit": "meter"
+  },
+  "areas": [
+    {
+      "id": "FarmArea",
+      "type": "Empty",
+      "center": [-8, 0, 0],
+      "size": [10, 0, 10],
+      "purpose": "밭 플롯 4개 배치 구역"
+    },
+    {
+      "id": "BarnArea",
+      "type": "Empty",
+      "center": [8, 0, 0],
+      "size": [10, 0, 10],
+      "purpose": "사육장 슬롯 4개 배치 구역"
+    },
+    {
+      "id": "VillageArea",
+      "type": "Empty",
+      "center": [0, 0, 10],
+      "size": [14, 0, 6],
+      "purpose": "가챠/상점 NPC 시설물 구역"
+    },
+    {
+      "id": "SpawnArea",
+      "type": "Empty",
+      "center": [0, 0, -8],
+      "size": [4, 0, 4],
+      "purpose": "플레이어 스폰 위치"
+    }
+  ],
+  "objects": [
+    {
+      "id": "Ground",
+      "type": "Environment",
+      "primitive": "Plane",
+      "position": [0, 0, 0],
+      "rotation": [0, 0, 0],
+      "scale": [3, 1, 3],
+      "color": "#7CBB72",
+      "components": [],
+      "notes": "Plane 기본 크기 10x10이므로 scale 3은 30x30"
+    },
+    {
+      "id": "DirectionalLight",
+      "type": "Environment",
+      "primitive": "Light",
+      "position": [0, 10, 0],
+      "rotation": [50, -30, 0],
+      "color": "#FFFFFF",
+      "intensity": 1.0
+    },
+    {
+      "id": "FarmAreaFloor",
+      "type": "AreaFloor",
+      "parent": "FarmArea",
+      "primitive": "Cube",
+      "position": [-8, 0.01, 0],
+      "rotation": [0, 0, 0],
+      "scale": [10, 0.02, 10],
+      "color": "#8B6F47"
+    },
+    {
+      "id": "BarnAreaFloor",
+      "type": "AreaFloor",
+      "parent": "BarnArea",
+      "primitive": "Cube",
+      "position": [8, 0.01, 0],
+      "rotation": [0, 0, 0],
+      "scale": [10, 0.02, 10],
+      "color": "#A0A0A0"
+    },
+    {
+      "id": "VillageAreaFloor",
+      "type": "AreaFloor",
+      "parent": "VillageArea",
+      "primitive": "Cube",
+      "position": [0, 0.01, 10],
+      "rotation": [0, 0, 0],
+      "scale": [14, 0.02, 6],
+      "color": "#D4B896"
+    },
+    {
+      "id": "farm_plot_01",
+      "type": "FarmPlot",
+      "parent": "FarmArea",
+      "primitive": "Cube",
+      "position": [-9.5, 0.05, -1.5],
+      "rotation": [0, 0, 0],
+      "scale": [2, 0.1, 2],
+      "color": "#6B4423",
+      "components": [
+        { "type": "BoxCollider", "isTrigger": true },
+        { "type": "FarmPlotInteractable", "interactionRange": 2.0 }
+      ],
+      "metadata": {
+        "plotIndex": 0
+      }
+    },
+    {
+      "id": "farm_plot_02",
+      "type": "FarmPlot",
+      "parent": "FarmArea",
+      "primitive": "Cube",
+      "position": [-6.5, 0.05, -1.5],
+      "rotation": [0, 0, 0],
+      "scale": [2, 0.1, 2],
+      "color": "#6B4423",
+      "components": [
+        { "type": "BoxCollider", "isTrigger": true },
+        { "type": "FarmPlotInteractable", "interactionRange": 2.0 }
+      ],
+      "metadata": {
+        "plotIndex": 1
+      }
+    },
+    {
+      "id": "farm_plot_03",
+      "type": "FarmPlot",
+      "parent": "FarmArea",
+      "primitive": "Cube",
+      "position": [-9.5, 0.05, 1.5],
+      "rotation": [0, 0, 0],
+      "scale": [2, 0.1, 2],
+      "color": "#6B4423",
+      "components": [
+        { "type": "BoxCollider", "isTrigger": true },
+        { "type": "FarmPlotInteractable", "interactionRange": 2.0 }
+      ],
+      "metadata": {
+        "plotIndex": 2
+      }
+    },
+    {
+      "id": "farm_plot_04",
+      "type": "FarmPlot",
+      "parent": "FarmArea",
+      "primitive": "Cube",
+      "position": [-6.5, 0.05, 1.5],
+      "rotation": [0, 0, 0],
+      "scale": [2, 0.1, 2],
+      "color": "#6B4423",
+      "components": [
+        { "type": "BoxCollider", "isTrigger": true },
+        { "type": "FarmPlotInteractable", "interactionRange": 2.0 }
+      ],
+      "metadata": {
+        "plotIndex": 3
+      }
+    },
+    {
+      "id": "barn_slot_01",
+      "type": "BarnSlot",
+      "parent": "BarnArea",
+      "primitive": "Cube",
+      "position": [6.5, 0.25, -1.5],
+      "rotation": [0, 0, 0],
+      "scale": [2, 0.5, 2],
+      "color": "#C0C0C0",
+      "components": [
+        { "type": "BoxCollider", "isTrigger": true },
+        { "type": "BarnSlotInteractable", "interactionRange": 2.0 }
+      ],
+      "metadata": {
+        "slotIndex": 0
+      }
+    },
+    {
+      "id": "barn_slot_02",
+      "type": "BarnSlot",
+      "parent": "BarnArea",
+      "primitive": "Cube",
+      "position": [9.5, 0.25, -1.5],
+      "rotation": [0, 0, 0],
+      "scale": [2, 0.5, 2],
+      "color": "#C0C0C0",
+      "components": [
+        { "type": "BoxCollider", "isTrigger": true },
+        { "type": "BarnSlotInteractable", "interactionRange": 2.0 }
+      ],
+      "metadata": {
+        "slotIndex": 1
+      }
+    },
+    {
+      "id": "barn_slot_03",
+      "type": "BarnSlot",
+      "parent": "BarnArea",
+      "primitive": "Cube",
+      "position": [6.5, 0.25, 1.5],
+      "rotation": [0, 0, 0],
+      "scale": [2, 0.5, 2],
+      "color": "#C0C0C0",
+      "components": [
+        { "type": "BoxCollider", "isTrigger": true },
+        { "type": "BarnSlotInteractable", "interactionRange": 2.0 }
+      ],
+      "metadata": {
+        "slotIndex": 2
+      }
+    },
+    {
+      "id": "barn_slot_04",
+      "type": "BarnSlot",
+      "parent": "BarnArea",
+      "primitive": "Cube",
+      "position": [9.5, 0.25, 1.5],
+      "rotation": [0, 0, 0],
+      "scale": [2, 0.5, 2],
+      "color": "#C0C0C0",
+      "components": [
+        { "type": "BoxCollider", "isTrigger": true },
+        { "type": "BarnSlotInteractable", "interactionRange": 2.0 }
+      ],
+      "metadata": {
+        "slotIndex": 3
+      }
+    },
+    {
+      "id": "GachaBuilding",
+      "type": "GachaBuilding",
+      "parent": "VillageArea",
+      "primitive": "Cube",
+      "position": [-4, 1.5, 10],
+      "rotation": [0, 0, 0],
+      "scale": [2, 3, 2],
+      "color": "#9B59B6",
+      "components": [
+        { "type": "BoxCollider", "isTrigger": true },
+        { "type": "GachaInteractable", "interactionRange": 2.5 }
+      ]
+    },
+    {
+      "id": "ShopBuilding",
+      "type": "ShopBuilding",
+      "parent": "VillageArea",
+      "primitive": "Cube",
+      "position": [4, 1.5, 10],
+      "rotation": [0, 0, 0],
+      "scale": [2, 3, 2],
+      "color": "#E67E22",
+      "components": [
+        { "type": "BoxCollider", "isTrigger": true },
+        { "type": "ShopInteractable", "interactionRange": 2.5 }
+      ]
+    },
+    {
+      "id": "Player",
+      "type": "Player",
+      "primitive": "Capsule",
+      "position": [0, 1, -8],
+      "rotation": [0, 0, 0],
+      "scale": [1, 1, 1],
+      "color": "#4A90E2",
+      "components": [
+        { "type": "CharacterController" },
+        { "type": "PlayerController", "moveSpeed": 5.0 },
+        { "type": "PlayerInteractor", "checkInterval": 0.1 }
+      ]
+    },
+    {
+      "id": "MainCamera",
+      "type": "Camera",
+      "parent": "Player",
+      "primitive": "Camera",
+      "position": [0, 5, -12],
+      "rotation": [30, 0, 0],
+      "components": [
+        { "type": "Camera" },
+        { "type": "AudioListener" }
+      ],
+      "notes": "MVP는 Player의 자식 카메라로 단순 처리. 추후 Cinemachine 권장."
+    },
+    {
+      "id": "GameManager",
+      "type": "Manager",
+      "primitive": "Empty",
+      "position": [0, 0, 0],
+      "components": [
+        { "type": "GameManager" }
+      ]
+    },
+    {
+      "id": "EconomyManager",
+      "type": "Manager",
+      "parent": "GameManager",
+      "primitive": "Empty",
+      "position": [0, 0, 0],
+      "components": [
+        { "type": "EconomyManager" }
+      ]
+    },
+    {
+      "id": "InventoryManager",
+      "type": "Manager",
+      "parent": "GameManager",
+      "primitive": "Empty",
+      "position": [0, 0, 0],
+      "components": [
+        { "type": "InventoryManager" }
+      ]
+    },
+    {
+      "id": "GachaManager",
+      "type": "Manager",
+      "parent": "GameManager",
+      "primitive": "Empty",
+      "position": [0, 0, 0],
+      "components": [
+        { "type": "GachaManager" }
+      ]
+    },
+    {
+      "id": "FarmManager",
+      "type": "Manager",
+      "parent": "GameManager",
+      "primitive": "Empty",
+      "position": [0, 0, 0],
+      "components": [
+        { "type": "FarmManager" }
+      ]
+    },
+    {
+      "id": "BarnManager",
+      "type": "Manager",
+      "parent": "GameManager",
+      "primitive": "Empty",
+      "position": [0, 0, 0],
+      "components": [
+        { "type": "BarnManager" }
+      ]
+    },
+    {
+      "id": "CreatureManager",
+      "type": "Manager",
+      "parent": "GameManager",
+      "primitive": "Empty",
+      "position": [0, 0, 0],
+      "components": [
+        { "type": "CreatureManager" }
+      ]
+    },
+    {
+      "id": "BreedingManager",
+      "type": "Manager",
+      "parent": "GameManager",
+      "primitive": "Empty",
+      "position": [0, 0, 0],
+      "components": [
+        { "type": "BreedingManager" }
+      ]
+    }
+  ],
+  "creature_visual_palette": {
+    "creature_carrot_horse": {
+      "color": "#FF8C42",
+      "primitive": "Capsule",
+      "scale": [0.8, 1, 0.8],
+      "displayName": "당근말"
+    },
+    "creature_cabbage_cow": {
+      "color": "#9ACD32",
+      "primitive": "Capsule",
+      "scale": [0.8, 1, 0.8],
+      "displayName": "양배추소"
+    },
+    "creature_tomato_chicken": {
+      "color": "#E63946",
+      "primitive": "Capsule",
+      "scale": [0.8, 1, 0.8],
+      "displayName": "토마토닭"
+    },
+    "creature_salad_horse": {
+      "color": "#2E8B57",
+      "primitive": "Capsule",
+      "scale": [0.8, 1, 0.8],
+      "displayName": "샐러드말"
+    },
+    "creature_ketchup_chicken": {
+      "color": "#8B0000",
+      "primitive": "Capsule",
+      "scale": [0.8, 1, 0.8],
+      "displayName": "케첩닭"
+    }
+  },
+  "farm_plot_state_colors": {
+    "Empty": "#6B4423",
+    "Growing": "#8B6F47",
+    "Ready": "#FFD700"
+  }
+}

@@ -39,6 +39,8 @@ namespace Cultivation.Systems
         public bool IsUIModeActive { get; private set; }
         public event Action<bool> OnUIModeChanged;
 
+        private int _uiActivatedFrame = -1;
+
         private void Awake()
         {
             if (_gachaConfig == null) Debug.LogError("[GameManager] GachaConfig가 할당되지 않았습니다.");
@@ -66,9 +68,14 @@ namespace Cultivation.Systems
             Breeding?.Tick(dt);
 
             var kb = Keyboard.current;
-            if (kb != null && kb.escapeKey.wasPressedThisFrame && IsUIModeActive)
+            // UI를 연 바로 그 프레임의 E키 입력은 즉시 닫힘으로 처리되지 않도록 다음 프레임부터만 토글 허용.
+            if (kb != null && IsUIModeActive && Time.frameCount > _uiActivatedFrame)
             {
-                SetUIModeActive(false);
+                // ESC 또는 E키로 UI 닫기. 닫히면 ApplyCursor(false)에서 자동 잠금.
+                if (kb.escapeKey.wasPressedThisFrame || kb.eKey.wasPressedThisFrame)
+                {
+                    SetUIModeActive(false);
+                }
             }
         }
 
@@ -77,6 +84,7 @@ namespace Cultivation.Systems
         {
             if (IsUIModeActive == active) return;
             IsUIModeActive = active;
+            if (active) _uiActivatedFrame = Time.frameCount;
             ApplyCursor(active);
             OnUIModeChanged?.Invoke(active);
         }

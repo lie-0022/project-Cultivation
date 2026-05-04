@@ -70,53 +70,31 @@ namespace Cultivation.UI
 
         private void RefreshSeeds()
         {
-            if (_seedInventoryHUD == null || _registry == null) return;
-
-            // 씨앗 행을 이름으로 찾아 카운트 레이블만 갱신
-            foreach (var seedId in SeedIds)
+            if (_seedInventoryHUD == null) return;
+            // UXML hud-row 순서: carrot(0) / cabbage(1) / tomato(2) — SeedIds 배열과 일치
+            var rows = _seedInventoryHUD.Query<VisualElement>(className: "hud-row").ToList();
+            for (int i = 0; i < rows.Count && i < SeedIds.Length; i++)
             {
-                var seed = _registry.FindSeed(seedId);
-                if (seed == null) continue;
-                int count = _gm.Inventory.GetSeedCount(seedId);
-                // UXML 행 이름 없으므로 씨앗명 Label로 탐색
-                UpdateInventoryRow(_seedInventoryHUD, seed.SeedName, count);
+                int count = _gm.Inventory.GetSeedCount(SeedIds[i]);
+                var lbl = rows[i].Q<Label>(className: "hud-item-count");
+                if (lbl == null) continue;
+                lbl.text = $"×{count}";
+                lbl.EnableInClassList("hud-item-count--zero", count == 0);
             }
         }
 
         private void RefreshCrops()
         {
-            if (_cropInventoryHUD == null || _registry == null) return;
-
-            foreach (var cropId in CropIds)
+            if (_cropInventoryHUD == null) return;
+            // UXML hud-row 순서: carrot(0) / cabbage(1) — CropIds 배열과 일치
+            var rows = _cropInventoryHUD.Query<VisualElement>(className: "hud-row").ToList();
+            for (int i = 0; i < rows.Count && i < CropIds.Length; i++)
             {
-                var crop = _registry.FindCrop(cropId);
-                if (crop == null) continue;
-                int count = _gm.Inventory.GetCropCount(cropId);
-                UpdateInventoryRow(_cropInventoryHUD, crop.CropName, count);
-            }
-        }
-
-        /// <summary>itemName이 포함된 행에서 "×N" 패턴 Label을 찾아 갱신.</summary>
-        private static void UpdateInventoryRow(VisualElement parent, string itemName, int count)
-        {
-            foreach (var row in parent.Children())
-            {
-                Label nameLabel = null;
-                Label countLabel = null;
-                foreach (var child in row.Children())
-                {
-                    if (child is Label lbl)
-                    {
-                        if (lbl.text == itemName) nameLabel = lbl;
-                        else if (lbl.text.StartsWith("×")) countLabel = lbl;
-                    }
-                }
-                if (nameLabel != null && countLabel != null)
-                {
-                    countLabel.text = $"×{count}";
-                    countLabel.EnableInClassList("hud-item-count--zero", count == 0);
-                    return;
-                }
+                int count = _gm.Inventory.GetCropCount(CropIds[i]);
+                var lbl = rows[i].Q<Label>(className: "hud-item-count");
+                if (lbl == null) continue;
+                lbl.text = $"×{count}";
+                lbl.EnableInClassList("hud-item-count--zero", count == 0);
             }
         }
 

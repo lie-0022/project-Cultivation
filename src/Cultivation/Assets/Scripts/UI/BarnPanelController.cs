@@ -104,17 +104,21 @@ namespace Cultivation.UI
             _tabBreed?.RegisterCallback<ClickEvent>(_ => SetTab(BarnTab.Breed));
             _tabSell?.RegisterCallback<ClickEvent>(_ => SetTab(BarnTab.Sell));
 
-            gm.Barn.OnCreatureAdded += _ => Refresh();
-            gm.Barn.OnCreatureRemoved += _ => Refresh();
-            gm.Barn.OnBarnExpanded += _ => Refresh();
+            gm.Barn.OnCreatureAdded += OnBarnChanged;
+            gm.Barn.OnCreatureRemoved += OnBarnRemovedOrExpanded;
+            gm.Barn.OnBarnExpanded += OnBarnRemovedOrExpanded;
         }
+
+        private void OnBarnChanged(Runtime.CreatureInstance _) => Refresh();
+        private void OnBarnRemovedOrExpanded(string _) => Refresh();
+        private void OnBarnRemovedOrExpanded(int _) => Refresh();
 
         private void OnDestroy()
         {
             if (_gm == null) return;
-            _gm.Barn.OnCreatureAdded -= _ => Refresh();
-            _gm.Barn.OnCreatureRemoved -= _ => Refresh();
-            _gm.Barn.OnBarnExpanded -= _ => Refresh();
+            _gm.Barn.OnCreatureAdded -= OnBarnChanged;
+            _gm.Barn.OnCreatureRemoved -= OnBarnRemovedOrExpanded;
+            _gm.Barn.OnBarnExpanded -= OnBarnRemovedOrExpanded;
         }
 
         public void Open()

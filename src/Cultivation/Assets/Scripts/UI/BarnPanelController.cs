@@ -43,8 +43,15 @@ namespace Cultivation.UI
         private Label _expandCostLabel;
         private Button _expandBtn;
 
+        // 잠금 모드용 — 탭/본문 컨텐츠 숨김 + 안내 라벨
+        private VisualElement _tabBar;
+        private Label _titleLabel;
+        private System.Collections.Generic.List<VisualElement> _bodyHideables;
+        private Label _lockedHint;
+
         private BarnTab _currentTab = BarnTab.Convert;
         private GameManager _gm;
+        private int _clickedSlotIndex = -1;
 
         public void Initialize(GameManager gm)
         {
@@ -53,12 +60,13 @@ namespace Cultivation.UI
             var root = _document.rootVisualElement;
             _closeBtn = root.Q<Button>("CloseBtn");
             _barnGrid = root.Q<VisualElement>(className: "barn-grid");
+            _titleLabel = root.Q<Label>(className: "panel-title");
 
             // 탭 버튼은 tab-bar 하위 3번째 Button들
-            var tabBar = root.Q<VisualElement>(className: "tab-bar");
-            if (tabBar != null)
+            _tabBar = root.Q<VisualElement>(className: "tab-bar");
+            if (_tabBar != null)
             {
-                var tabs = tabBar.Query<Button>().ToList();
+                var tabs = _tabBar.Query<Button>().ToList();
                 if (tabs.Count >= 3)
                 {
                     _tabConvert = tabs[0];
@@ -98,6 +106,31 @@ namespace Cultivation.UI
                 _expandBtn?.RegisterCallback<ClickEvent>(_ => OnExpand());
             }
 
+            // 잠금 모드용: 본문에서 expand-row를 제외한 모든 직계 자식 + 그리드 위 "현재 사육 중" 라벨까지 모아 둠
+            _bodyHideables = new System.Collections.Generic.List<VisualElement>();
+            var panelBody = root.Q<VisualElement>(className: "barn-body");
+            if (panelBody != null)
+            {
+                foreach (var child in panelBody.Children())
+                {
+                    if (child == expandRow) continue;
+                    _bodyHideables.Add(child);
+                }
+                // 잠금 안내 라벨 — 한 번만 생성, 잠금 시 활성화
+                _lockedHint = new Label();
+                _lockedHint.AddToClassList("t-medium");
+                _lockedHint.AddToClassList("t-md");
+                _lockedHint.AddToClassList("t-muted");
+                _lockedHint.style.unityTextAlign = TextAnchor.MiddleCenter;
+                _lockedHint.style.paddingTop = 24;
+                _lockedHint.style.paddingBottom = 24;
+                _lockedHint.style.display = DisplayStyle.None;
+                // expand-row 위에 삽입
+                int expandIdx = panelBody.IndexOf(expandRow);
+                if (expandIdx >= 0) panelBody.Insert(expandIdx, _lockedHint);
+                else panelBody.Add(_lockedHint);
+            }
+
             _closeBtn?.RegisterCallback<ClickEvent>(_ => CloseFromPanel());
             _convertBtn?.RegisterCallback<ClickEvent>(_ => OnConvert());
             _tabConvert?.RegisterCallback<ClickEvent>(_ => SetTab(BarnTab.Convert));
@@ -121,9 +154,10 @@ namespace Cultivation.UI
             _gm.Barn.OnBarnExpanded -= OnBarnRemovedOrExpanded;
         }
 
-        public void Open()
+        public void Open(int slotIndex = -1)
         {
             _document.rootVisualElement.style.display = DisplayStyle.Flex;
+            _clickedSlotIndex = slotIndex;
             _selectedCropId = null;
             _breedSelectA = null;
             _breedSelectB = null;
@@ -157,7 +191,7 @@ namespace Cultivation.UI
             SetTabActive(_tabBreed, tab == BarnTab.Breed);
             SetTabActive(_tabSell, tab == BarnTab.Sell);
 
-            // 탭에 따라 콘텐츠 영역 가시성 조정
+            // 탭에 따라 콘텐츠 영역 가시성 조정 — 잠금 모드일 때는 Refresh가 다시 모두 숨김.
             SetDisplay(_convertRow, tab == BarnTab.Convert);
             if (_breedStartBtn.parent != null && tab != BarnTab.Breed)
                 _breedStartBtn.RemoveFromHierarchy();
@@ -165,11 +199,35 @@ namespace Cultivation.UI
             Refresh();
         }
 
+        private bool IsLocked() =>
+            _gm != null && _clickedSlotIndex >= 0 && _clickedSlotIndex >= _gm.Barn.Slots.Count;
+
+        private void ApplyLockedVisibility(bool locked)
+        {
+            SetDisplay(_tabBar, !locked);
+            if (_bodyHideables != null)
+                foreach (var el in _bodyHideables) SetDisplay(el, !locked);
+            if (_lockedHint != null)
+                _lockedHint.style.display = locked ? DisplayStyle.Flex : DisplayStyle.None;
+            if (locked && _breedStartBtn?.parent != null) _breedStartBtn.RemoveFromHierarchy();
+        }
+
         private void Refresh()
         {
-            RebuildSlotGrid();
+            bool locked = IsLocked();
+            ApplyLockedVisibility(locked);
             RefreshExpandRow();
 
+            if (locked)
+            {
+                if (_titleLabel != null) _titleLabel.text = $"사육장 ({_clickedSlotIndex + 1}번 슬롯 — 잠김)";
+                if (_lockedHint != null) _lockedHint.text = "이 슬롯은 잠겨 있습니다. 확장으로 잠금을 해제하세요.";
+                return;
+            }
+
+            if (_titleLabel != null) _titleLabel.text = "사육장";
+
+            RebuildSlotGrid();
             if (_currentTab == BarnTab.Convert) RebuildConvertRow();
             else if (_currentTab == BarnTab.Breed) RebuildBreedTab();
             else if (_currentTab == BarnTab.Sell) RebuildSellTab();

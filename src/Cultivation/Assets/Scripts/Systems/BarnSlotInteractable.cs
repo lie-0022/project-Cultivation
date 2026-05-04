@@ -14,12 +14,12 @@ namespace Cultivation.Systems
         public int SlotIndex => _slotIndex;
         public Vector3 Position => transform.position;
         public float InteractionRange => _interactionRange;
-        public string PromptText => "사육장";
+        public string PromptText => $"사육장 #{_slotIndex + 1}";
         public bool CanInteract => true;
 
         public void OnInteract(GameManager gm)
         {
-            gm?.UI?.OpenBarnPanel();
+            gm?.UI?.OpenBarnPanel(_slotIndex);
         }
     }
 }

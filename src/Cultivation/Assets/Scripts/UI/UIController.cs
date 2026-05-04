@@ -64,10 +64,10 @@ namespace Cultivation.UI
             _gm?.SetUIModeActive(true);
         }
 
-        public void OpenBarnPanel()
+        public void OpenBarnPanel(int slotIndex = -1)
         {
             CloseAll();
-            _barnPanel?.Open();
+            _barnPanel?.Open(slotIndex);
             _gm?.SetUIModeActive(true);
         }
 

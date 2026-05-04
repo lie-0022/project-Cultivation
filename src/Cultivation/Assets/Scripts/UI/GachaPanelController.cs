@@ -36,7 +36,8 @@ namespace Cultivation.UI
                 _rarityTag = _resultCard.Q<Label>(className: "seed-rarity-tag");
                 _seedNameLabel = _resultCard.Q<Label>(className: "seed-name");
                 _seedDescLabel = _resultCard.Q<Label>(className: "seed-desc");
-                _seedArt = _resultCard.Q<VisualElement>(className: "seed-art");
+                // seed-art 컨테이너 내부의 pic-big 요소를 직접 참조해야 클래스 교체가 작동함
+                _seedArt = _resultCard.Q<VisualElement>(className: "seed-art")?.Q<VisualElement>(className: "pic-big");
             }
 
             _drawBtn?.RegisterCallback<ClickEvent>(_ => OnDraw());

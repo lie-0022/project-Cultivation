@@ -165,7 +165,7 @@ namespace Cultivation.UI
 
                     var art = new VisualElement();
                     art.AddToClassList("pic-md");
-                    art.AddToClassList($"creature-art--{artKey}`");
+                    art.AddToClassList($"creature-art--{artKey}");
                     row.Add(art);
 
                     var nameLabel = new Label(data.CreatureName);

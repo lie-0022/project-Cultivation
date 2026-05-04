@@ -92,7 +92,8 @@ namespace Cultivation.UI
 
         public void Close()
         {
-            _document.rootVisualElement.style.display = DisplayStyle.None;
+            var root = _document != null ? _document.rootVisualElement : null;
+            if (root != null) root.style.display = DisplayStyle.None;
             _plotIndex = -1;
         }
 

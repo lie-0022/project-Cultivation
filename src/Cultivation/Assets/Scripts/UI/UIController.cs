@@ -21,6 +21,16 @@ namespace Cultivation.UI
         public void Initialize(Systems.GameManager gm)
         {
             _gm = gm;
+
+            // 에디터에서 패널 GameObject가 꺼져 있어도 런타임에는 강제 활성화.
+            // (UIDocument.rootVisualElement는 비활성 GameObject에서 null이라 Q<>가 모두 깨짐)
+            // 가시성은 각 패널 컨트롤러가 style.display로만 제어한다.
+            EnsureActive(_hud);
+            EnsureActive(_gachaPanel);
+            EnsureActive(_farmPlotPanel);
+            EnsureActive(_barnPanel);
+            EnsureActive(_shopPanel);
+
             _hud?.Initialize(gm);
             _gachaPanel?.Initialize(gm);
             _farmPlotPanel?.Initialize(gm);
@@ -32,6 +42,12 @@ namespace Cultivation.UI
             _farmPlotPanel?.Close();
             _barnPanel?.Close();
             _shopPanel?.Close();
+        }
+
+        private static void EnsureActive(MonoBehaviour mb)
+        {
+            if (mb == null) return;
+            if (!mb.gameObject.activeSelf) mb.gameObject.SetActive(true);
         }
 
         public void OpenGachaPanel()

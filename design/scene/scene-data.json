@@ -261,9 +261,10 @@
       "color": "#4A90E2",
       "components": [
         { "type": "CharacterController" },
-        { "type": "PlayerController", "moveSpeed": 5.0 },
-        { "type": "PlayerInteractor", "checkInterval": 0.1 }
-      ]
+        { "type": "Cultivation.Systems.PlayerController", "moveSpeed": 5.0 },
+        { "type": "Cultivation.Systems.InteractionController", "checkInterval": 0.1 }
+      ],
+      "notes": "InteractionController는 거리 체크 + E키 + 프롬프트 UI 갱신을 담당. ADR-0002에 따라 모든 게임 코드는 Cultivation.<도메인> 네임스페이스 사용."
     },
     {
       "id": "MainCamera",
@@ -274,9 +275,10 @@
       "rotation": [30, 0, 0],
       "components": [
         { "type": "Camera" },
-        { "type": "AudioListener" }
+        { "type": "AudioListener" },
+        { "type": "Cultivation.Systems.PlayerCameraController" }
       ],
-      "notes": "MVP는 Player의 자식 카메라로 단순 처리. 추후 Cinemachine 권장."
+      "notes": "Player의 자식 카메라. PlayerCameraController가 마우스 yaw/pitch 처리."
     },
     {
       "id": "GameManager",
@@ -284,80 +286,12 @@
       "primitive": "Empty",
       "position": [0, 0, 0],
       "components": [
-        { "type": "GameManager" }
-      ]
-    },
-    {
-      "id": "EconomyManager",
-      "type": "Manager",
-      "parent": "GameManager",
-      "primitive": "Empty",
-      "position": [0, 0, 0],
-      "components": [
-        { "type": "EconomyManager" }
-      ]
-    },
-    {
-      "id": "InventoryManager",
-      "type": "Manager",
-      "parent": "GameManager",
-      "primitive": "Empty",
-      "position": [0, 0, 0],
-      "components": [
-        { "type": "InventoryManager" }
-      ]
-    },
-    {
-      "id": "GachaManager",
-      "type": "Manager",
-      "parent": "GameManager",
-      "primitive": "Empty",
-      "position": [0, 0, 0],
-      "components": [
-        { "type": "GachaManager" }
-      ]
-    },
-    {
-      "id": "FarmManager",
-      "type": "Manager",
-      "parent": "GameManager",
-      "primitive": "Empty",
-      "position": [0, 0, 0],
-      "components": [
-        { "type": "FarmManager" }
-      ]
-    },
-    {
-      "id": "BarnManager",
-      "type": "Manager",
-      "parent": "GameManager",
-      "primitive": "Empty",
-      "position": [0, 0, 0],
-      "components": [
-        { "type": "BarnManager" }
-      ]
-    },
-    {
-      "id": "CreatureManager",
-      "type": "Manager",
-      "parent": "GameManager",
-      "primitive": "Empty",
-      "position": [0, 0, 0],
-      "components": [
-        { "type": "CreatureManager" }
-      ]
-    },
-    {
-      "id": "BreedingManager",
-      "type": "Manager",
-      "parent": "GameManager",
-      "primitive": "Empty",
-      "position": [0, 0, 0],
-      "components": [
-        { "type": "BreedingManager" }
-      ]
+        { "type": "Cultivation.Systems.GameManager" }
+      ],
+      "notes": "단일 진입점. 모든 게임 매니저(Inventory/Economy/Gacha/Barn/Creature/Farm/Breeding/Trade)를 POCO로 보유. ADR-0003 참조."
     }
   ],
+  "_managers_note": "ADR-0003 (매니저 POCO + GameManager 단일 진입점)에 따라 EconomyManager 등 매니저들은 별도 GameObject가 아니라 GameManager가 Awake에서 new로 생성하는 일반 C# 클래스다. 매니저 자식 GameObject 항목을 두지 않는다.",
   "creature_visual_palette": {
     "creature_carrot_horse": {
       "color": "#FF8C42",

@@ -31,6 +31,7 @@ namespace Cultivation.Systems
         public CreatureManager Creature { get; private set; }
         public FarmManager Farm { get; private set; }
         public BreedingManager Breeding { get; private set; }
+        public TradeManager Trade { get; private set; }
 
         public GachaConfig GachaConfig => _gachaConfig;
         public ExpansionConfig ExpansionConfig => _expansionConfig;
@@ -54,6 +55,7 @@ namespace Cultivation.Systems
             Creature = new CreatureManager(Inventory, Barn, _dataRegistry);
             Farm = new FarmManager(Inventory, Economy, _expansionConfig, _dataRegistry, _startingFarmPlots);
             Breeding = new BreedingManager(Barn, _dataRegistry, _selfCloneTime);
+            Trade = new TradeManager(Inventory, Barn, Economy, _dataRegistry);
         }
 
         private void Start()

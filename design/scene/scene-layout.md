@@ -190,37 +190,34 @@ MainScene
 │   ├── GachaBuilding
 │   └── ShopBuilding
 ├── --- PLAYER ---
-├── Player (Capsule, CharacterController)
-│   └── MainCamera (자식)
+├── Player (Capsule, CharacterController, PlayerController, InteractionController)
+│   └── MainCamera (자식, PlayerCameraController)
 └── --- MANAGERS ---
-    └── GameManager (Empty GameObject + GameManager 컴포넌트)
-        ├── EconomyManager
-        ├── InventoryManager
-        ├── GachaManager
-        ├── FarmManager
-        ├── BarnManager
-        ├── CreatureManager
-        └── BreedingManager
+    └── GameManager (Empty GameObject + Cultivation.Systems.GameManager)
 ```
 
-> 매니저는 모두 `GameManager` 자식 GameObject로 두고, GameManager가 Awake 시점에 모두 초기화.
+> **ADR-0003 적용**: 매니저(Inventory/Economy/Gacha/Barn/Creature/Farm/Breeding/Trade)는 모두 POCO(일반 C# 클래스)이며, GameManager가 Awake에서 `new`로 생성·보유한다. 별도 매니저 GameObject 자식 계층은 없다.
 
 ---
 
 ## 9. 컴포넌트 부착 가이드
 
 ### Player
-- `CharacterController` (또는 Rigidbody + Capsule Collider)
-- `PlayerController` (커스텀 스크립트, WASD 이동)
-- `PlayerInteractor` (커스텀 스크립트, E키 + 거리 체크)
+- `CharacterController`
+- `Cultivation.Systems.PlayerController` (WASD 이동, 카메라 yaw 상대)
+- `Cultivation.Systems.InteractionController` (E키 + 거리 체크 + 프롬프트 갱신)
+
+### Player/MainCamera (자식)
+- `Camera`, `AudioListener`, `UniversalAdditionalCameraData`
+- `Cultivation.Systems.PlayerCameraController` (마우스 yaw/pitch)
 
 ### 시설물 (밭 플롯, 사육장 슬롯, 가챠 빌딩, 상점 빌딩)
-- `BoxCollider` (Trigger 또는 일반)
-- `IInteractable` 인터페이스 구현 컴포넌트:
-  - `FarmPlotInteractable`
-  - `BarnInteractable`
-  - `GachaInteractable`
-  - `ShopInteractable`
+- `BoxCollider` (Trigger)
+- `Cultivation.Systems.IInteractable` 구현 컴포넌트:
+  - `FarmPlotInteractable` (plotIndex, range 2.0)
+  - `BarnSlotInteractable` (slotIndex, range 2.0)
+  - `GachaInteractable` (range 2.5)
+  - `ShopInteractable` (range 2.5)
 
 ### 영역 바닥 (XxxAreaFloor)
 - 시각 구분용, Collider 불필요

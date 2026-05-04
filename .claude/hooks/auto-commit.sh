@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # auto-commit.sh
-# Stop 이벤트에서 변경사항 자동 커밋
+# Stop 이벤트에서 변경사항 자동 커밋 + origin push
 # - 변경사항 없으면 skip
 # - "auto:" prefix로 식별
-# - push는 하지 않음 (별도 스케줄러에서)
+# - 커밋 성공 후 origin/<현재 브랜치> 로 push (origin remote 있는 경우만)
+# - 네트워크 실패해도 후크는 성공 종료 (다음 사이클에서 재시도)
 
 set -euo pipefail
 
@@ -39,5 +40,14 @@ git commit -m "auto: session checkpoint at ${TIMESTAMP}
 Files changed: ${CHANGED_FILES}
 
 [Auto-committed by Stop hook]" 2>&1 | tail -3
+
+# 커밋 성공 시 origin remote가 있으면 push 시도 (실패해도 무시)
+if git remote get-url origin >/dev/null 2>&1; then
+    BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "")
+    if [ -n "$BRANCH" ] && [ "$BRANCH" != "HEAD" ]; then
+        echo "[auto-commit] pushing to origin/${BRANCH}..."
+        git push origin "$BRANCH" 2>&1 | tail -3 || echo "[auto-commit] push 실패 (네트워크/인증) — 다음 사이클에서 재시도"
+    fi
+fi
 
 exit 0

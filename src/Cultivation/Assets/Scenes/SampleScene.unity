@@ -413,6 +413,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cultivation.Systems.GameManager
   _startingGold: 200
+  _startingFarmPlots: 2
+  _startingBarnSlots: 2
+  _gachaConfig: {fileID: 11400000, guid: ef7264850daf9574f883c92962a136ab, type: 2}
+  _expansionConfig: {fileID: 11400000, guid: a0b248fce8ecc2f4b8cadd2137b51921, type: 2}
+  _dataRegistry: {fileID: 11400000, guid: 79f0a96c2cd85084792229f5b6ac76aa, type: 2}
 --- !u!4 &454604198
 Transform:
   m_ObjectHideFlags: 0

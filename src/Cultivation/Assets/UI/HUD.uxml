@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    HUD.uxml
+    상시 표시되는 HUD: Gold + Seed Inventory + Crop Inventory + InteractionPrompt
+    위치는 USS에서 절대 좌표로 지정.
+-->
+<UXML xmlns="UnityEngine.UIElements" xmlns:ui="UnityEngine.UIElements">
+    <Style src="_palette.uss" />
+    <Style src="_typography.uss" />
+    <Style src="HUD.uss" />
+
+    <VisualElement name="HUDRoot" class="hud-root" picking-mode="Ignore">
+
+        <!-- 우상단 스택: Gold / Seeds / Crops -->
+        <VisualElement name="TopRightStack" class="hud-stack">
+
+            <!-- Gold -->
+            <VisualElement name="GoldHUD" class="hud-card hud-card--gold">
+                <VisualElement class="hud-icon hud-icon--gold" />
+                <Label name="GoldLabel" text="250" class="t-bold t-emphasis hud-gold-value" />
+                <Label text="G" class="t-semibold t-lg hud-gold-suffix" />
+            </VisualElement>
+
+            <!-- Seed Inventory -->
+            <VisualElement name="SeedInventoryHUD" class="hud-card hud-inventory">
+                <Label text="씨앗" class="t-semibold t-sm hud-section-label" />
+                <VisualElement class="hud-row">
+                    <VisualElement class="pic pic-seed pic-seed--carrot" />
+                    <Label text="당근" class="t-medium t-sm hud-item-name" />
+                    <Label text="×3" class="t-bold t-md hud-item-count" />
+                </VisualElement>
+                <VisualElement class="hud-row">
+                    <VisualElement class="pic pic-seed pic-seed--cabbage" />
+                    <Label text="양배추" class="t-medium t-sm hud-item-name" />
+                    <Label text="×1" class="t-bold t-md hud-item-count" />
+                </VisualElement>
+                <VisualElement class="hud-row">
+                    <VisualElement class="pic pic-seed pic-seed--tomato" />
+                    <Label text="토마토" class="t-medium t-sm hud-item-name" />
+                    <Label text="×0" class="t-bold t-md hud-item-count hud-item-count--zero" />
+                </VisualElement>
+            </VisualElement>
+
+            <!-- Crop Inventory -->
+            <VisualElement name="CropInventoryHUD" class="hud-card hud-inventory">
+                <Label text="작물" class="t-semibold t-sm hud-section-label" />
+                <VisualElement class="hud-row">
+                    <VisualElement class="pic pic-crop pic-crop--carrot" />
+                    <Label text="당근" class="t-medium t-sm hud-item-name" />
+                    <Label text="×2" class="t-bold t-md hud-item-count" />
+                </VisualElement>
+                <VisualElement class="hud-row">
+                    <VisualElement class="pic pic-crop pic-crop--cabbage" />
+                    <Label text="양배추" class="t-medium t-sm hud-item-name" />
+                    <Label text="×0" class="t-bold t-md hud-item-count hud-item-count--zero" />
+                </VisualElement>
+            </VisualElement>
+
+        </VisualElement>
+
+        <!-- 하단 중앙 InteractionPrompt -->
+        <VisualElement name="InteractionPrompt" class="interaction-prompt">
+            <VisualElement class="key-cap">
+                <Label text="E" class="t-bold t-lg key-cap-label" />
+            </VisualElement>
+            <Label name="PromptLabel" text="가챠" class="t-semibold t-lg prompt-text" />
+        </VisualElement>
+
+    </VisualElement>
+</UXML>

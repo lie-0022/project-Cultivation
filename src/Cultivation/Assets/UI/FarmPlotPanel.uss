@@ -1,0 +1,124 @@
+/* ============================================================
+   FarmPlotPanel.uss
+   밭 패널 전용 (3 모드 + 진행도 바 + 확장 행).
+   공통 modal/btn 스타일은 GachaPanel.uss에 정의.
+   ============================================================ */
+
+.panel--farm { /* 너비 등 변경 시 여기서 오버라이드 */ }
+.accent-bar--farm { background-color: var(--color-accent-farm); }
+.panel-title-icon--farm { background-color: var(--color-accent-farm); }
+
+.farm-body { padding: 24px 30px 24px 30px; }
+
+.farm-mode {
+    align-items: center;
+    padding-top: 8px;
+    padding-bottom: 24px;
+}
+
+.mode-prompt { color: var(--color-text-primary); margin-bottom: 6px; }
+.mode-prompt--ready { color: var(--color-gold-deep); }
+.mode-sub { color: var(--color-text-secondary); margin-bottom: 18px; }
+
+/* ---------- Empty: seed list ---------- */
+.seed-list {
+    width: 100%;
+    margin-top: 16px;
+}
+
+.seed-list-item {
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--color-bg-cream);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    border-width: 1px;
+    border-color: var(--color-divider);
+}
+.seed-list-item--disabled { opacity: 0.55; }
+
+.pic-md {
+    width: 36px; height: 36px;
+    border-radius: 18px;
+    border-width: 2px;
+    border-color: rgba(0,0,0,0.18);
+}
+.pic-md.pic-seed--carrot  { background-color: var(--color-crop-carrot); }
+.pic-md.pic-seed--cabbage { background-color: var(--color-crop-cabbage); }
+.pic-md.pic-seed--tomato  { background-color: var(--color-crop-tomato); }
+
+.seed-list-meta {
+    flex-grow: 1;
+    flex-direction: column;
+    margin-left: 14px;
+}
+.seed-list-count { margin-right: 14px; color: var(--color-text-primary); }
+.seed-list-count--zero { color: var(--color-text-muted); }
+
+/* ---------- Growing: progress ---------- */
+.growing-art {
+    width: 110px; height: 110px;
+    border-radius: 55px;
+    background-color: var(--color-state-growing);
+    align-items: center; justify-content: center;
+    margin-bottom: 16px;
+    border-width: 3px;
+    border-color: var(--color-state-growing-light);
+}
+.growing-art .pic-big { opacity: 0.92; }
+
+.progress-track {
+    width: 100%;
+    height: 18px;
+    background-color: var(--color-bg-cream);
+    border-radius: 9px;
+    border-width: 1px;
+    border-color: var(--color-divider);
+    margin-top: 14px;
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    border-radius: 9px;
+}
+.progress-fill--growing { background-color: var(--color-state-growing); }
+.progress-fill--breeding { background-color: var(--color-accent-barn); }
+.progress-stripes {
+    /* HTML-only: 줄무늬 + slide.  USS에서는 빈 element(투명)로 처리. */
+    width: 100%; height: 100%;
+}
+
+/* ---------- Ready ---------- */
+.ready-art {
+    width: 130px; height: 130px;
+    border-radius: 65px;
+    background-color: var(--color-state-ready-soft);
+    align-items: center; justify-content: center;
+    margin-bottom: 16px;
+    border-width: 4px;
+    border-color: var(--color-state-ready);
+    /* HTML-only: pulse animation */
+}
+
+.btn--large {
+    padding: 14px 36px;
+    font-size: var(--fs-lg);
+    border-radius: 12px;
+    margin-top: 18px;
+}
+
+/* ---------- 확장 행 ---------- */
+.expand-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--color-bg-cream);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-top: 12px;
+    border-width: 1px;
+    border-color: var(--color-divider);
+}
+.expand-label { flex-grow: 1; color: var(--color-text-secondary); }
+.cost-chip--small { padding: 4px 10px; margin-right: 12px; }

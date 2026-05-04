@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    BarnPanel.uxml — 사육장 패널.
+    탭: 크리처화 / 교배 / 판매.
+    슬롯 그리드 2x2 (확장 가능).
+    활성 교배 진행 표시 영역 포함.
+-->
+<UXML xmlns="UnityEngine.UIElements">
+    <Style src="_palette.uss" />
+    <Style src="_typography.uss" />
+    <Style src="GachaPanel.uss" />
+    <Style src="FarmPlotPanel.uss" />
+    <Style src="BarnPanel.uss" />
+
+    <VisualElement name="BarnPanel" class="modal-overlay">
+        <VisualElement class="modal-card modal-card--barn panel--barn">
+            <VisualElement class="panel-accent-bar accent-bar--barn" />
+
+            <!-- 헤더 -->
+            <VisualElement class="panel-header">
+                <VisualElement class="panel-title-row">
+                    <VisualElement class="panel-title-icon panel-title-icon--barn" />
+                    <Label text="사육장" class="t-bold t-panel-title panel-title" />
+                </VisualElement>
+                <Button name="CloseBtn" text="✕" class="close-btn" />
+            </VisualElement>
+
+            <!-- 탭 바 -->
+            <VisualElement class="tab-bar">
+                <Button text="크리처화" class="tab tab--active" />
+                <Button text="교배" class="tab" />
+                <Button text="판매" class="tab" />
+            </VisualElement>
+
+            <!-- 본문 -->
+            <VisualElement class="panel-body barn-body">
+
+                <!-- 슬롯 그리드 -->
+                <Label text="현재 사육 중" class="t-semibold t-sm section-label" />
+                <VisualElement class="barn-grid">
+
+                    <!-- 점유 슬롯: 당근말 -->
+                    <VisualElement class="creature-slot">
+                        <VisualElement class="creature-card creature-card--carrot-horse">
+                            <VisualElement class="creature-art creature-art--carrot-horse" />
+                            <Label text="당근말" class="t-bold t-md creature-name" />
+                            <Label text="기본 30G" class="t-xs t-muted creature-sub" />
+                        </VisualElement>
+                    </VisualElement>
+
+                    <!-- 점유 + busy: 양배추소 -->
+                    <VisualElement class="creature-slot">
+                        <VisualElement class="creature-card creature-card--cabbage-cow creature-card--busy">
+                            <VisualElement class="creature-art creature-art--cabbage-cow" />
+                            <Label text="양배추소" class="t-bold t-md creature-name" />
+                            <VisualElement class="busy-tag">
+                                <Label text="교배 중" class="t-bold t-xs busy-tag-label" />
+                            </VisualElement>
+                        </VisualElement>
+                    </VisualElement>
+
+                    <!-- 빈 슬롯 -->
+                    <VisualElement class="creature-slot">
+                        <VisualElement class="creature-card creature-card--empty">
+                            <Label text="비어 있음" class="t-medium t-sm empty-text" />
+                        </VisualElement>
+                    </VisualElement>
+
+                    <!-- 빈 슬롯 -->
+                    <VisualElement class="creature-slot">
+                        <VisualElement class="creature-card creature-card--empty">
+                            <Label text="비어 있음" class="t-medium t-sm empty-text" />
+                        </VisualElement>
+                    </VisualElement>
+
+                </VisualElement>
+
+                <!-- 활성 교배 진행 표시 -->
+                <VisualElement class="active-breed">
+                    <VisualElement class="active-breed-head">
+                        <Label text="진행 중인 교배" class="t-semibold t-sm section-label" />
+                        <Label text="42초 남음" class="t-bold t-sm time-left" />
+                    </VisualElement>
+                    <VisualElement class="parents-row">
+                        <VisualElement class="parent-chip">
+                            <VisualElement class="parent-pic creature-art--carrot-horse" />
+                            <Label text="당근말" class="t-medium t-sm" />
+                        </VisualElement>
+                        <Label text="+" class="t-bold t-lg plus" />
+                        <VisualElement class="parent-chip">
+                            <VisualElement class="parent-pic creature-art--cabbage-cow" />
+                            <Label text="양배추소" class="t-medium t-sm" />
+                        </VisualElement>
+                        <Label text="→" class="t-bold t-lg plus" />
+                        <VisualElement class="parent-chip parent-chip--result">
+                            <VisualElement class="parent-pic creature-art--salad-horse" />
+                            <Label text="샐러드말" class="t-medium t-sm" />
+                        </VisualElement>
+                    </VisualElement>
+                    <VisualElement class="progress-track">
+                        <VisualElement class="progress-fill progress-fill--breeding" style="width: 30%;">
+                            <VisualElement class="progress-stripes" />
+                        </VisualElement>
+                    </VisualElement>
+                    <Button text="취소" class="btn btn--ghost btn--small btn--cancel" />
+                </VisualElement>
+
+                <!-- 크리처화 작업 영역 -->
+                <Label text="작물을 크리처로" class="t-semibold t-sm section-label section-label--top" />
+                <VisualElement class="convert-row">
+                    <VisualElement class="convert-pick convert-pick--active">
+                        <VisualElement class="pic-md pic-crop--carrot" />
+                        <Label text="당근 ×2" class="t-medium t-sm" />
+                    </VisualElement>
+                    <VisualElement class="convert-pick">
+                        <VisualElement class="pic-md pic-crop--cabbage" />
+                        <Label text="양배추 ×0" class="t-medium t-sm t-muted" />
+                    </VisualElement>
+                    <VisualElement class="convert-pick">
+                        <VisualElement class="pic-md pic-crop--tomato" />
+                        <Label text="토마토 ×1" class="t-medium t-sm" />
+                    </VisualElement>
+                    <VisualElement class="convert-spacer" />
+                    <Button text="크리처화" class="btn btn--barn btn--small" />
+                </VisualElement>
+
+                <!-- 확장 행 -->
+                <VisualElement class="expand-row">
+                    <Label text="사육장 확장" class="t-medium t-sm expand-label" />
+                    <VisualElement class="cost-chip cost-chip--small">
+                        <VisualElement class="cost-icon" />
+                        <Label text="566 G" class="t-bold t-sm cost-text" />
+                    </VisualElement>
+                    <Button text="확장" class="btn btn--barn btn--small" />
+                </VisualElement>
+
+            </VisualElement>
+        </VisualElement>
+    </VisualElement>
+</UXML>

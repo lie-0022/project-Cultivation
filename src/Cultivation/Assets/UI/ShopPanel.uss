@@ -1,0 +1,48 @@
+/* ============================================================
+   ShopPanel.uss — 상점 패널.
+   ============================================================ */
+
+.accent-bar--shop { background-color: var(--color-accent-shop); }
+.panel-title-icon--shop { background-color: var(--color-accent-shop); }
+
+.tab-bar--shop { padding: 8px 28px 0 28px; }
+.tab--active-shop {
+    color: var(--color-accent-shop);
+    border-bottom-color: var(--color-accent-shop);
+}
+
+.shop-body { padding: 20px 28px 22px 28px; }
+
+.sale-list { margin-bottom: 16px; }
+
+.sale-row {
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--color-bg-cream);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    border-width: 1px;
+    border-color: var(--color-divider);
+}
+.sale-row--disabled { opacity: 0.55; }
+
+.sale-name { margin-left: 12px; color: var(--color-text-primary); }
+.sale-qty  { flex-grow: 1; margin-left: 10px; color: var(--color-text-secondary); }
+
+.cost-chip--earn {
+    background-color: rgba(245, 180, 0, 0.16);
+    margin-right: 12px;
+}
+
+.shop-footer {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    background-color: var(--color-bg-cream);
+    border-radius: 12px;
+    border-width: 1px;
+    border-color: var(--color-divider);
+}
+.gold-total { color: var(--color-gold-deep); }

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    FarmPlotPanel.uxml
+    밭 플롯 패널 — 3개 모드 컨테이너를 모두 포함.
+    런타임에서 한 번에 하나의 모드 컨테이너만 display:flex.
+-->
+<UXML xmlns="UnityEngine.UIElements">
+    <Style src="_palette.uss" />
+    <Style src="_typography.uss" />
+    <Style src="GachaPanel.uss" /> <!-- 공통 modal/btn 스타일 재사용 -->
+    <Style src="FarmPlotPanel.uss" />
+
+    <VisualElement name="FarmPlotPanel" class="modal-overlay">
+
+        <VisualElement class="modal-card panel--farm">
+            <VisualElement class="panel-accent-bar accent-bar--farm" />
+
+            <!-- 헤더 -->
+            <VisualElement class="panel-header">
+                <VisualElement class="panel-title-row">
+                    <VisualElement class="panel-title-icon panel-title-icon--farm" />
+                    <Label name="FarmTitle" text="밭 (1번 칸)" class="t-bold t-panel-title panel-title" />
+                </VisualElement>
+                <Button name="CloseBtn" text="✕" class="close-btn" />
+            </VisualElement>
+
+            <!-- 본문 -->
+            <VisualElement class="panel-body farm-body">
+
+                <!-- 모드: Empty -->
+                <VisualElement name="EmptyMode" class="farm-mode farm-mode--empty">
+                    <Label text="어떤 씨앗을 심을까요?" class="t-bold t-xl mode-prompt" />
+                    <VisualElement class="seed-list">
+                        <VisualElement class="seed-list-item">
+                            <VisualElement class="pic-md pic-seed--carrot" />
+                            <VisualElement class="seed-list-meta">
+                                <Label text="당근 씨앗" class="t-semibold t-md" />
+                                <Label text="10초 · 일반" class="t-sm t-muted" />
+                            </VisualElement>
+                            <Label text="×3" class="t-bold t-md seed-list-count" />
+                            <Button text="심기" class="btn btn--primary btn--small" />
+                        </VisualElement>
+                        <VisualElement class="seed-list-item">
+                            <VisualElement class="pic-md pic-seed--cabbage" />
+                            <VisualElement class="seed-list-meta">
+                                <Label text="양배추 씨앗" class="t-semibold t-md" />
+                                <Label text="20초 · 일반" class="t-sm t-muted" />
+                            </VisualElement>
+                            <Label text="×1" class="t-bold t-md seed-list-count" />
+                            <Button text="심기" class="btn btn--primary btn--small" />
+                        </VisualElement>
+                        <VisualElement class="seed-list-item seed-list-item--disabled">
+                            <VisualElement class="pic-md pic-seed--tomato" />
+                            <VisualElement class="seed-list-meta">
+                                <Label text="토마토 씨앗" class="t-semibold t-md" />
+                                <Label text="30초 · 희귀" class="t-sm t-muted" />
+                            </VisualElement>
+                            <Label text="×0" class="t-bold t-md seed-list-count seed-list-count--zero" />
+                            <Button text="심기" class="btn btn--primary btn--small btn--disabled" />
+                        </VisualElement>
+                    </VisualElement>
+                </VisualElement>
+
+                <!-- 모드: Growing -->
+                <VisualElement name="GrowingMode" class="farm-mode farm-mode--growing" style="display:none;">
+                    <VisualElement class="growing-art">
+                        <VisualElement class="pic-big pic-big--cabbage" />
+                    </VisualElement>
+                    <Label text="양배추 자라는 중…" class="t-bold t-xl mode-prompt" />
+                    <Label text="13초 남음" class="t-md t-secondary mode-sub" />
+                    <VisualElement class="progress-track">
+                        <VisualElement class="progress-fill progress-fill--growing" style="width: 35%;">
+                            <!-- HTML-only: 줄무늬 stripe 애니메이션. USS에서는 단색 fill로 fallback. -->
+                            <VisualElement class="progress-stripes" />
+                        </VisualElement>
+                    </VisualElement>
+                </VisualElement>
+
+                <!-- 모드: Ready -->
+                <VisualElement name="ReadyMode" class="farm-mode farm-mode--ready" style="display:none;">
+                    <VisualElement class="ready-art">
+                        <VisualElement class="pic-big pic-big--carrot" />
+                        <!-- HTML-only: sparkle dots -->
+                    </VisualElement>
+                    <Label text="수확 준비 완료!" class="t-bold t-emphasis mode-prompt mode-prompt--ready" />
+                    <Label text="당근 1개를 얻습니다" class="t-md t-secondary mode-sub" />
+                    <Button text="수확하기" class="btn btn--primary btn--large" />
+                </VisualElement>
+
+                <!-- 확장 영역 (모드 무관 항상 표시) -->
+                <VisualElement class="expand-row">
+                    <Label text="다음 칸 확장" class="t-medium t-sm expand-label" />
+                    <VisualElement class="cost-chip cost-chip--small">
+                        <VisualElement class="cost-icon" />
+                        <Label text="283 G" class="t-bold t-sm cost-text" />
+                    </VisualElement>
+                    <Button text="확장" class="btn btn--farm btn--small" />
+                </VisualElement>
+
+            </VisualElement>
+        </VisualElement>
+    </VisualElement>
+</UXML>

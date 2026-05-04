@@ -1,5 +1,6 @@
 using System;
 using Cultivation.Data;
+using Cultivation.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,6 +25,9 @@ namespace Cultivation.Systems
         [SerializeField] private ExpansionConfig _expansionConfig;
         [SerializeField] private GameDataRegistry _dataRegistry;
 
+        [Header("UI")]
+        [SerializeField] private UIController _uiController;
+
         public InventoryManager Inventory { get; private set; }
         public EconomyManager Economy { get; private set; }
         public GachaManager Gacha { get; private set; }
@@ -36,6 +40,7 @@ namespace Cultivation.Systems
         public GachaConfig GachaConfig => _gachaConfig;
         public ExpansionConfig ExpansionConfig => _expansionConfig;
         public GameDataRegistry DataRegistry => _dataRegistry;
+        public UIController UI => _uiController;
 
         public bool IsUIModeActive { get; private set; }
         public event Action<bool> OnUIModeChanged;
@@ -61,6 +66,7 @@ namespace Cultivation.Systems
         private void Start()
         {
             ApplyCursor(false);
+            _uiController?.Initialize(this);
         }
 
         private void Update()
@@ -76,6 +82,7 @@ namespace Cultivation.Systems
                 // ESC 또는 E키로 UI 닫기. 닫히면 ApplyCursor(false)에서 자동 잠금.
                 if (kb.escapeKey.wasPressedThisFrame || kb.eKey.wasPressedThisFrame)
                 {
+                    _uiController?.CloseAll();
                     SetUIModeActive(false);
                 }
             }

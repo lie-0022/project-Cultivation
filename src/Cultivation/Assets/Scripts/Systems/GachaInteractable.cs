@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Cultivation.Systems
 {
     /// <summary>
-    /// 가챠 빌딩 시설물. OnInteract 시 가챠 UI 진입 예정(Phase 5).
+    /// 가챠 빌딩 시설물. OnInteract 시 GachaPanel을 엽니다.
     /// </summary>
     public class GachaInteractable : MonoBehaviour, IInteractable
     {
@@ -16,8 +16,7 @@ namespace Cultivation.Systems
 
         public void OnInteract(GameManager gm)
         {
-            Debug.Log("[Gacha] 상호작용 (Phase 5에서 가챠 UI 연결 예정).");
-            if (gm != null) gm.SetUIModeActive(true);
+            gm?.UI?.OpenGachaPanel();
         }
     }
 }

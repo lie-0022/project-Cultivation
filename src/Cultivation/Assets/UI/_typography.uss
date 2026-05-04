@@ -1,0 +1,49 @@
+/* ============================================================
+   _typography.uss
+   폰트 패밀리 + 사이즈 변수.
+   Pretendard .ttf 파일을 Resources/Fonts/ 아래에 두고 경로 참조.
+   ============================================================ */
+
+:root {
+    /* 폰트 정의 — TTF 파일 경로 (Unity Project Resources 기준) */
+    --font-pretendard-regular: url("project://database/Assets/Resources/Fonts/Pretendard-Regular.ttf");
+    --font-pretendard-medium:  url("project://database/Assets/Resources/Fonts/Pretendard-Medium.ttf");
+    --font-pretendard-semibold:url("project://database/Assets/Resources/Fonts/Pretendard-SemiBold.ttf");
+    --font-pretendard-bold:    url("project://database/Assets/Resources/Fonts/Pretendard-Bold.ttf");
+
+    /* 사이즈 */
+    --fs-xs: 12px;
+    --fs-sm: 14px;
+    --fs-md: 16px;
+    --fs-lg: 18px;
+    --fs-xl: 22px;
+    --fs-title: 26px;
+    --fs-panel-title: 28px;
+    --fs-emphasis: 32px;
+    --fs-mega: 40px;
+}
+
+/* 기본 텍스트 (모든 Label에 상속되지 않으므로 클래스로 적용) */
+.t-base {
+    -unity-font-definition: var(--font-pretendard-regular);
+    font-size: var(--fs-md);
+    color: var(--color-text-primary);
+}
+
+.t-medium     { -unity-font-definition: var(--font-pretendard-medium); }
+.t-semibold   { -unity-font-definition: var(--font-pretendard-semibold); }
+.t-bold       { -unity-font-definition: var(--font-pretendard-bold); }
+
+.t-muted      { color: var(--color-text-muted); }
+.t-secondary  { color: var(--color-text-secondary); }
+.t-inverse    { color: var(--color-text-inverse); }
+
+.t-xs         { font-size: var(--fs-xs); }
+.t-sm         { font-size: var(--fs-sm); }
+.t-md         { font-size: var(--fs-md); }
+.t-lg         { font-size: var(--fs-lg); }
+.t-xl         { font-size: var(--fs-xl); }
+.t-title      { font-size: var(--fs-title); }
+.t-panel-title{ font-size: var(--fs-panel-title); }
+.t-emphasis   { font-size: var(--fs-emphasis); }
+.t-mega       { font-size: var(--fs-mega); }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- ShopPanel.uxml — 작물/크리처 판매 -->
+<UXML xmlns="UnityEngine.UIElements">
+    <Style src="_palette.uss" />
+    <Style src="_typography.uss" />
+    <Style src="GachaPanel.uss" />
+    <Style src="BarnPanel.uss" />
+    <Style src="ShopPanel.uss" />
+
+    <VisualElement name="ShopPanel" class="modal-overlay">
+        <VisualElement class="modal-card panel--shop">
+            <VisualElement class="panel-accent-bar accent-bar--shop" />
+
+            <VisualElement class="panel-header">
+                <VisualElement class="panel-title-row">
+                    <VisualElement class="panel-title-icon panel-title-icon--shop" />
+                    <Label text="상점" class="t-bold t-panel-title panel-title" />
+                </VisualElement>
+                <Button name="CloseBtn" text="✕" class="close-btn" />
+            </VisualElement>
+
+            <VisualElement class="tab-bar tab-bar--shop">
+                <Button text="작물 판매" class="tab tab--shop tab--active-shop" />
+                <Button text="크리처 판매" class="tab tab--shop" />
+            </VisualElement>
+
+            <VisualElement class="panel-body shop-body">
+
+                <VisualElement class="sale-list">
+                    <VisualElement class="sale-row">
+                        <VisualElement class="pic-md pic-crop--carrot" />
+                        <Label text="당근" class="t-semibold t-md sale-name" />
+                        <Label text="×2" class="t-bold t-md sale-qty" />
+                        <VisualElement class="cost-chip cost-chip--small cost-chip--earn">
+                            <VisualElement class="cost-icon" />
+                            <Label text="5 G" class="t-bold t-sm cost-text" />
+                        </VisualElement>
+                        <Button text="판매" class="btn btn--shop btn--small" />
+                    </VisualElement>
+
+                    <VisualElement class="sale-row">
+                        <VisualElement class="pic-md pic-crop--tomato" />
+                        <Label text="토마토" class="t-semibold t-md sale-name" />
+                        <Label text="×1" class="t-bold t-md sale-qty" />
+                        <VisualElement class="cost-chip cost-chip--small cost-chip--earn">
+                            <VisualElement class="cost-icon" />
+                            <Label text="15 G" class="t-bold t-sm cost-text" />
+                        </VisualElement>
+                        <Button text="판매" class="btn btn--shop btn--small" />
+                    </VisualElement>
+
+                    <VisualElement class="sale-row sale-row--disabled">
+                        <VisualElement class="pic-md pic-crop--cabbage" />
+                        <Label text="양배추" class="t-semibold t-md sale-name t-muted" />
+                        <Label text="×0" class="t-bold t-md sale-qty t-muted" />
+                        <VisualElement class="cost-chip cost-chip--small cost-chip--earn">
+                            <VisualElement class="cost-icon" />
+                            <Label text="8 G" class="t-bold t-sm cost-text" />
+                        </VisualElement>
+                        <Button text="판매" class="btn btn--shop btn--small btn--disabled" />
+                    </VisualElement>
+                </VisualElement>
+
+                <VisualElement class="shop-footer">
+                    <Label text="총 보유 골드" class="t-medium t-sm t-muted" />
+                    <Label text="200 G" class="t-bold t-xl gold-total" />
+                </VisualElement>
+
+            </VisualElement>
+        </VisualElement>
+    </VisualElement>
+</UXML>

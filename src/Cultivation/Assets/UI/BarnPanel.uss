@@ -1,0 +1,171 @@
+/* ============================================================
+   BarnPanel.uss
+   사육장 (포커스 패널) — 가장 공들인 화면.
+   슬롯 그리드 + 활성 교배 + 크리처화 픽커 + 확장.
+   ============================================================ */
+
+.modal-card--barn { width: 820px; max-width: 820px; }
+
+.accent-bar--barn { background-color: var(--color-accent-barn); }
+.panel-title-icon--barn { background-color: var(--color-accent-barn); }
+
+.barn-body { padding: 18px 28px 24px 28px; }
+
+/* ---------- 탭 바 ---------- */
+.tab-bar {
+    flex-direction: row;
+    padding: 8px 28px 0 28px;
+    background-color: transparent;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--color-divider);
+}
+.tab {
+    background-color: transparent;
+    border-width: 0;
+    color: var(--color-text-muted);
+    -unity-font-definition: var(--font-pretendard-semibold);
+    font-size: var(--fs-md);
+    padding: 12px 20px;
+    margin-right: 6px;
+    border-bottom-width: 3px;
+    border-bottom-color: transparent;
+    border-radius: 0;
+}
+.tab:hover { color: var(--color-text-primary); }
+.tab--active {
+    color: var(--color-accent-farm);
+    border-bottom-color: var(--color-accent-farm);
+}
+
+/* ---------- 섹션 라벨 ---------- */
+.section-label { color: var(--color-text-muted); margin-bottom: 10px; }
+.section-label--top { margin-top: 18px; }
+
+/* ---------- 슬롯 그리드 (2x2) ---------- */
+.barn-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+    /* USS는 gap 미지원 — 자식 margin으로 대체 */
+}
+
+.creature-slot {
+    width: 49%;
+    margin-right: 1%;
+    margin-bottom: 10px;
+}
+.creature-slot:nth-child(2n) { margin-right: 0; margin-left: 1%; }
+
+.creature-card {
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 16px;
+    background-color: var(--color-bg-cream);
+    border-radius: 12px;
+    border-width: 1px;
+    border-color: var(--color-divider);
+    height: 76px;
+}
+.creature-card--empty {
+    background-color: rgba(255, 246, 229, 0.5);
+    border-style: dashed;     /* USS는 dashed 미지원 — solid로 fallback. /* HTML-only */ */
+    border-color: var(--color-divider);
+    align-items: center;
+    justify-content: center;
+}
+.empty-text { color: var(--color-text-muted); }
+
+.creature-card--busy { opacity: 0.7; }
+
+.creature-name { flex-grow: 1; margin-left: 12px; color: var(--color-text-primary); }
+.creature-sub { margin-left: 12px; }
+
+/* 크리처 아트 (단순 색 도형 — 동물 모양은 PNG 텍스처로 교체 권장) */
+.creature-art {
+    width: 44px; height: 44px;
+    border-radius: 22px;
+    border-width: 3px;
+    border-color: rgba(0,0,0,0.18);
+}
+.creature-art--carrot-horse    { background-color: var(--color-creature-carrot-horse); }
+.creature-art--cabbage-cow     { background-color: var(--color-creature-cabbage-cow); }
+.creature-art--tomato-chicken  { background-color: var(--color-creature-tomato-chicken); }
+.creature-art--salad-horse     { background-color: var(--color-creature-salad-horse); }
+.creature-art--ketchup-chicken { background-color: var(--color-creature-ketchup-chicken); }
+
+.busy-tag {
+    background-color: rgba(0,0,0,0.65);
+    border-radius: 999px;
+    padding: 2px 8px;
+    align-self: center;
+}
+.busy-tag-label { color: var(--color-text-inverse); }
+
+/* ---------- 활성 교배 ---------- */
+.active-breed {
+    background-color: var(--color-bg-cream);
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin-top: 14px;
+    border-width: 1px;
+    border-color: var(--color-divider);
+}
+.active-breed-head {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.time-left { color: var(--color-state-growing); }
+
+.parents-row {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 12px;
+}
+.parent-chip {
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--color-panel-bg-strong);
+    border-radius: 999px;
+    padding: 4px 12px 4px 4px;
+    border-width: 1px;
+    border-color: var(--color-divider);
+    margin-right: 8px;
+}
+.parent-chip--result { border-color: var(--color-state-ready); }
+.parent-pic {
+    width: 26px; height: 26px;
+    border-radius: 13px;
+    border-width: 2px;
+    border-color: rgba(0,0,0,0.18);
+    margin-right: 8px;
+}
+.plus { color: var(--color-text-muted); margin-right: 8px; }
+
+.btn--cancel { align-self: flex-end; margin-top: 8px; }
+
+/* ---------- 크리처화 픽커 ---------- */
+.convert-row {
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--color-bg-cream);
+    border-radius: 12px;
+    padding: 12px 14px;
+    border-width: 1px;
+    border-color: var(--color-divider);
+}
+.convert-pick {
+    flex-direction: row;
+    align-items: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    margin-right: 8px;
+    background-color: var(--color-panel-bg-strong);
+    border-width: 2px;
+    border-color: transparent;
+}
+.convert-pick--active { border-color: var(--color-accent-farm); }
+.convert-pick .pic-md { width: 22px; height: 22px; border-radius: 11px; margin-right: 6px; }
+
+.convert-spacer { flex-grow: 1; }

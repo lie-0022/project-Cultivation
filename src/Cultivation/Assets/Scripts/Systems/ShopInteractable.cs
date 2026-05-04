@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Cultivation.Systems
 {
     /// <summary>
-    /// 상점 빌딩 시설물. OnInteract 시 작물/크리처 판매 UI 진입 예정(Phase 5).
+    /// 상점 빌딩 시설물. OnInteract 시 ShopPanel을 엽니다.
     /// </summary>
     public class ShopInteractable : MonoBehaviour, IInteractable
     {
@@ -16,8 +16,7 @@ namespace Cultivation.Systems
 
         public void OnInteract(GameManager gm)
         {
-            Debug.Log("[Shop] 상호작용 (Phase 5에서 판매 UI 연결 예정).");
-            if (gm != null) gm.SetUIModeActive(true);
+            gm?.UI?.OpenShopPanel();
         }
     }
 }

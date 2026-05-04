@@ -3,8 +3,7 @@ using UnityEngine;
 namespace Cultivation.Systems
 {
     /// <summary>
-    /// 밭 플롯 시설물. plotIndex로 FarmManager의 해당 플롯에 매핑된다.
-    /// MVP의 OnInteract는 UI 모드 ON + 디버그 로그만 처리(Phase 5에서 씨앗 선택/수확 UI 연동).
+    /// 밭 플롯 시설물. OnInteract 시 FarmPlotPanel을 해당 plotIndex로 엽니다.
     /// </summary>
     public class FarmPlotInteractable : MonoBehaviour, IInteractable
     {
@@ -19,8 +18,7 @@ namespace Cultivation.Systems
 
         public void OnInteract(GameManager gm)
         {
-            Debug.Log($"[FarmPlot {_plotIndex}] 상호작용 (Phase 5에서 씨앗 선택/수확 UI 연결 예정).");
-            if (gm != null) gm.SetUIModeActive(true);
+            gm?.UI?.OpenFarmPlotPanel(_plotIndex);
         }
     }
 }

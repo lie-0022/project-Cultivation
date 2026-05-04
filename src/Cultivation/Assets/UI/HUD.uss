@@ -1,0 +1,149 @@
+/* ============================================================
+   HUD.uss
+   HUD 레이아웃 + 픽토그램.
+   참고:
+     - USS는 box-shadow가 element 단위로 작동하지만 제한적이라
+       카드 그림자는 별도 backdrop element를 깔지 않고
+       border + 진한 배경으로 깊이감 표현.
+     - HTML 프리뷰의 drop-shadow는 USS에서 미지원이므로
+       /* HTML-only */ 주석으로 표시.
+   ============================================================ */
+
+.hud-root {
+    position: absolute;
+    top: 0;  bottom: 0;  left: 0;  right: 0;
+}
+
+/* ---------- 우상단 스택 ---------- */
+.hud-stack {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    width: 240px;
+    flex-direction: column;
+}
+
+.hud-card {
+    background-color: var(--color-panel-bg-strong);
+    border-radius: 14px;
+    border-width: 1px;
+    border-color: rgba(70, 50, 20, 0.10);
+    padding: 12px 16px;
+    margin-bottom: 10px;
+}
+
+/* ---------- Gold 카드 ---------- */
+.hud-card--gold {
+    flex-direction: row;
+    align-items: center;
+    background-color: rgba(255, 251, 230, 0.98);
+    border-color: rgba(245, 180, 0, 0.45);
+    border-width: 2px;
+    padding: 10px 18px;
+}
+
+.hud-icon--gold {
+    width: 28px;
+    height: 28px;
+    border-radius: 14px;
+    background-color: var(--color-gold);
+    border-width: 2px;
+    border-color: var(--color-gold-deep);
+    margin-right: 10px;
+}
+
+.hud-gold-value {
+    color: var(--color-gold-deep);
+    margin-right: 4px;
+}
+.hud-gold-suffix {
+    color: var(--color-gold-deep);
+}
+
+/* ---------- 인벤토리 카드 ---------- */
+.hud-inventory { padding: 10px 14px; }
+
+.hud-section-label {
+    color: var(--color-text-muted);
+    margin-bottom: 6px;
+    margin-left: 2px;
+}
+
+.hud-row {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.hud-item-name {
+    flex-grow: 1;
+    margin-left: 10px;
+    color: var(--color-text-primary);
+}
+
+.hud-item-count {
+    color: var(--color-text-primary);
+    margin-left: 8px;
+}
+.hud-item-count--zero { color: var(--color-text-muted); }
+
+/* ---------- 픽토그램 (단순 SVG-like 도형) ----------
+   USS는 SVG 인라인을 지원 안 하므로 단일 색 도형으로만 표현.
+   더 복잡한 모양이 필요하면 텍스처 PNG로 교체 권장.
+*/
+.pic {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+}
+
+.pic-seed {
+    width: 22px;
+    height: 22px;
+    border-radius: 11px;
+    border-width: 2px;
+    border-color: rgba(0,0,0,0.18);
+}
+.pic-seed--carrot  { background-color: var(--color-crop-carrot); }
+.pic-seed--cabbage { background-color: var(--color-crop-cabbage); }
+.pic-seed--tomato  { background-color: var(--color-crop-tomato); }
+
+.pic-crop {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    border-width: 2px;
+    border-color: var(--color-leaf);
+}
+.pic-crop--carrot  { background-color: var(--color-crop-carrot); }
+.pic-crop--cabbage { background-color: var(--color-crop-cabbage); }
+.pic-crop--tomato  { background-color: var(--color-crop-tomato); }
+
+/* ---------- 하단 InteractionPrompt ---------- */
+.interaction-prompt {
+    position: absolute;
+    bottom: 64px;
+    left: 50%;
+    translate: -50% 0;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgba(43, 43, 43, 0.85);
+    border-radius: 999px;
+    padding: 10px 22px 10px 12px;
+}
+
+.key-cap {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background-color: var(--color-text-inverse);
+    border-width: 2px;
+    border-color: rgba(0,0,0,0.4);
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+}
+.key-cap-label { color: var(--color-text-primary); }
+
+.prompt-text { color: var(--color-text-inverse); }

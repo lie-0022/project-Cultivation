@@ -1,0 +1,244 @@
+/* ============================================================
+   GachaPanel.uss
+   가챠 패널 + 공통 modal/btn/seed-card 스타일.
+   다른 패널 USS도 동일한 .modal-overlay, .modal-card, .btn 류를
+   재정의해 사용 — UXML이 분리돼 있어 USS도 분리되지만
+   동일 클래스를 같은 정의로 유지.
+   ============================================================ */
+
+/* ---------- 모달 오버레이 ---------- */
+.modal-overlay {
+    position: absolute;
+    top: 0;  bottom: 0;  left: 0;  right: 0;
+    background-color: var(--color-overlay-dim);
+    align-items: center;
+    justify-content: center;
+    /* 페이드 인 — 호스트 코드에서 opacity 0 → 1 토글 */
+    transition-property: opacity;
+    transition-duration: 200ms;
+}
+
+.modal-card {
+    width: 720px;
+    max-width: 720px;
+    background-color: var(--color-panel-bg-strong);
+    border-radius: 18px;
+    border-width: 1px;
+    border-color: rgba(70, 50, 20, 0.12);
+    padding: 0;
+    /* HTML-only: drop-shadow.  USS에서는 별도 element를 뒤에 깔아야 함. */
+    overflow: hidden;
+}
+
+.panel-accent-bar {
+    position: absolute;
+    top: 0;  bottom: 0;  left: 0;
+    width: 6px;
+}
+.accent-bar--gacha { background-color: var(--color-accent-gacha); }
+
+/* ---------- 헤더 ---------- */
+.panel-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 24px 16px 30px;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--color-divider);
+}
+.panel-title-row { flex-direction: row; align-items: center; }
+.panel-title-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    margin-right: 12px;
+}
+.panel-title-icon--gacha { background-color: var(--color-accent-gacha); }
+.panel-title { color: var(--color-text-primary); }
+
+.close-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 18px;
+    background-color: transparent;
+    color: var(--color-text-muted);
+    -unity-font-definition: var(--font-pretendard-bold);
+    font-size: 18px;
+    border-width: 0;
+    -unity-text-align: middle-center;
+}
+.close-btn:hover {
+    background-color: rgba(0,0,0,0.06);
+    color: var(--color-text-primary);
+}
+
+/* ---------- 본문 ---------- */
+.panel-body { padding: 20px 30px 26px 30px; }
+
+/* ---------- 가챠 풀 정보 ---------- */
+.pool-info {
+    background-color: var(--color-bg-cream);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+}
+.pool-info-label {
+    color: var(--color-text-muted);
+    margin-bottom: 6px;
+}
+.pool-row {
+    flex-direction: row;
+    align-items: center;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+.pip {
+    width: 12px; height: 12px;
+    border-radius: 6px;
+    margin-right: 10px;
+}
+.rarity-common-bg { background-color: var(--color-rarity-common); }
+.rarity-rare-bg   { background-color: var(--color-rarity-rare); }
+.rarity-epic-bg   { background-color: var(--color-rarity-epic); }
+.pool-name { flex-grow: 1; color: var(--color-text-primary); }
+.pool-pct  { color: var(--color-text-secondary); }
+
+/* ---------- 결과 카드 ---------- */
+.result-area {
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0 24px 0;
+}
+
+.seed-card {
+    width: 280px;
+    flex-direction: column;
+    align-items: center;
+    padding: 18px 20px 20px 20px;
+    background-color: var(--color-panel-bg-strong);
+    border-radius: 14px;
+    border-width: 2px;
+    border-color: var(--color-rarity-common);
+}
+.seed-card--common {
+    border-color: var(--color-rarity-common);
+    background-color: var(--color-rarity-common-bg);
+}
+.seed-card--rare {
+    border-color: var(--color-rarity-rare);
+    background-color: var(--color-rarity-rare-bg);
+    /* HTML-only: glow shadow */
+}
+.seed-card--epic {
+    border-color: var(--color-rarity-epic);
+    background-color: var(--color-rarity-epic-bg);
+    /* HTML-only: glow shadow + sparkle animation */
+}
+
+.seed-art {
+    width: 120px;
+    height: 120px;
+    border-radius: 60px;
+    background-color: var(--color-panel-bg-strong);
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    border-width: 2px;
+    border-color: rgba(0,0,0,0.06);
+}
+
+.pic-big { width: 72px; height: 72px; border-radius: 18px; }
+.pic-big--carrot  { background-color: var(--color-crop-carrot); }
+.pic-big--cabbage { background-color: var(--color-crop-cabbage); }
+.pic-big--tomato  { background-color: var(--color-crop-tomato); }
+
+.seed-meta { align-items: center; }
+
+.seed-rarity-tag {
+    padding: 2px 10px;
+    border-radius: 999px;
+    background-color: var(--color-panel-bg-strong);
+    margin-bottom: 6px;
+}
+.rarity-common { color: var(--color-rarity-common); }
+.rarity-rare   { color: var(--color-rarity-rare); }
+.rarity-epic   { color: var(--color-rarity-epic); }
+
+.seed-name { color: var(--color-text-primary); margin-bottom: 4px; }
+.seed-desc { color: var(--color-text-secondary); }
+
+/* ---------- 액션 / 비용 ---------- */
+.action-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4px;
+}
+
+.cost-chip {
+    flex-direction: row;
+    align-items: center;
+    background-color: var(--color-bg-cream);
+    border-radius: 999px;
+    padding: 8px 18px;
+    border-width: 1px;
+    border-color: rgba(245, 180, 0, 0.40);
+}
+.cost-icon {
+    width: 20px; height: 20px; border-radius: 10px;
+    background-color: var(--color-gold);
+    border-width: 2px;
+    border-color: var(--color-gold-deep);
+    margin-right: 8px;
+}
+.cost-text { color: var(--color-gold-deep); }
+
+/* ---------- 버튼 ---------- */
+.btn {
+    padding: 12px 28px;
+    border-radius: 10px;
+    border-width: 0;
+    -unity-font-definition: var(--font-pretendard-semibold);
+    font-size: var(--fs-md);
+    color: var(--color-text-inverse);
+    background-color: var(--color-action-primary);
+    -unity-text-align: middle-center;
+    transition-property: translate, background-color;
+    transition-duration: 120ms;
+}
+.btn:hover { translate: 0 -2px; }
+.btn:active { translate: 0 0; }
+
+.btn--primary { background-color: var(--color-action-primary); }
+.btn--primary:hover { background-color: var(--color-action-primary-deep); }
+
+.btn--gacha   { background-color: var(--color-accent-gacha); }
+.btn--gacha:hover { background-color: #7E3F95; }
+
+.btn--shop    { background-color: var(--color-accent-shop); }
+.btn--shop:hover { background-color: #C76617; }
+
+.btn--farm    { background-color: var(--color-accent-farm); }
+.btn--farm:hover { background-color: #4F3318; }
+
+.btn--barn    { background-color: #5C5C5C; }
+.btn--barn:hover { background-color: #3F3F3F; }
+
+.btn--ghost {
+    background-color: transparent;
+    color: var(--color-text-secondary);
+    border-width: 1px;
+    border-color: var(--color-divider);
+}
+.btn--ghost:hover { background-color: var(--color-bg-cream); }
+
+.btn--danger { background-color: var(--color-action-danger); }
+
+.btn--small { padding: 6px 14px; font-size: var(--fs-sm); border-radius: 8px; }
+
+.btn--disabled,
+.btn:disabled {
+    background-color: var(--color-action-disabled);
+    color: var(--color-disabled-text);
+    opacity: 0.6;
+}

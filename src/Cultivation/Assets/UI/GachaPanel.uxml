@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    GachaPanel.uxml
+    씨앗 가챠 모달.
+-->
+<UXML xmlns="UnityEngine.UIElements">
+    <Style src="_palette.uss" />
+    <Style src="_typography.uss" />
+    <Style src="GachaPanel.uss" />
+
+    <VisualElement name="GachaPanel" class="modal-overlay">
+
+        <VisualElement class="modal-card panel--gacha">
+
+            <!-- 좌측 컬러 액센트 바 -->
+            <VisualElement class="panel-accent-bar accent-bar--gacha" />
+
+            <!-- 헤더 -->
+            <VisualElement class="panel-header">
+                <VisualElement class="panel-title-row">
+                    <VisualElement class="panel-title-icon panel-title-icon--gacha" />
+                    <Label text="씨앗 가챠" class="t-bold t-panel-title panel-title" />
+                </VisualElement>
+                <Button name="CloseBtn" text="✕" class="close-btn" />
+            </VisualElement>
+
+            <!-- 본문 -->
+            <VisualElement class="panel-body">
+
+                <!-- 가챠 풀 정보 -->
+                <VisualElement class="pool-info">
+                    <Label text="등장 확률" class="t-semibold t-sm pool-info-label" />
+                    <VisualElement class="pool-row">
+                        <VisualElement class="pip rarity-common-bg" />
+                        <Label text="일반" class="t-medium t-sm pool-name" />
+                        <Label text="90%" class="t-bold t-sm pool-pct" />
+                    </VisualElement>
+                    <VisualElement class="pool-row">
+                        <VisualElement class="pip rarity-rare-bg" />
+                        <Label text="희귀" class="t-medium t-sm pool-name" />
+                        <Label text="10%" class="t-bold t-sm pool-pct" />
+                    </VisualElement>
+                </VisualElement>
+
+                <!-- 결과 카드 영역 -->
+                <VisualElement class="result-area">
+                    <VisualElement name="ResultCard" class="seed-card seed-card--rare">
+                        <VisualElement class="seed-art">
+                            <VisualElement class="pic-big pic-big--tomato" />
+                        </VisualElement>
+                        <VisualElement class="seed-meta">
+                            <Label text="희귀" class="t-bold t-xs seed-rarity-tag rarity-rare" />
+                            <Label text="토마토 씨앗" class="t-bold t-lg seed-name" />
+                            <Label text="30초 후 토마토 수확" class="t-medium t-sm seed-desc" />
+                        </VisualElement>
+                    </VisualElement>
+                </VisualElement>
+
+                <!-- 비용 + 액션 -->
+                <VisualElement class="action-row">
+                    <VisualElement class="cost-chip">
+                        <VisualElement class="cost-icon" />
+                        <Label text="50 G" class="t-bold t-lg cost-text" />
+                    </VisualElement>
+                    <Button name="DrawBtn" text="1회 뽑기" class="btn btn--primary btn--gacha" />
+                </VisualElement>
+
+            </VisualElement>
+        </VisualElement>
+    </VisualElement>
+</UXML>

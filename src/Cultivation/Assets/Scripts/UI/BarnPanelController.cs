@@ -308,21 +308,12 @@ namespace Cultivation.UI
                     art.AddToClassList($"creature-art--{artKey}");
                     card.Add(art);
 
-                    var nameLabel = new Label(data != null ? data.CreatureName : creature.CreatureId);
+                    string baseName = data != null ? data.CreatureName : creature.CreatureId;
+                    var nameLabel = new Label(isSelectedForBreed ? $"{baseName}  ✓" : baseName);
                     nameLabel.AddToClassList("t-bold");
                     nameLabel.AddToClassList("t-md");
                     nameLabel.AddToClassList("creature-name");
-                    if (isSelectedForBreed) nameLabel.style.flexGrow = 0; // 체크가 이름 바로 옆에 붙도록
                     card.Add(nameLabel);
-
-                    if (isSelectedForBreed)
-                    {
-                        var check = new Label("✓");
-                        check.AddToClassList("t-bold");
-                        check.AddToClassList("t-md");
-                        check.AddToClassList("selected-check");
-                        card.Add(check);
-                    }
 
                     if (busy)
                     {
@@ -386,20 +377,13 @@ namespace Cultivation.UI
                 art.AddToClassList($"pic-crop--{artKey}");
                 pick.Add(art);
 
-                var label = new Label($"{crop.CropName} ×{count}");
+                string labelText = selected ? $"{crop.CropName} ×{count}  ✓" : $"{crop.CropName} ×{count}";
+                var label = new Label(labelText);
                 label.AddToClassList("t-medium");
                 label.AddToClassList("t-sm");
+                if (selected) label.AddToClassList("t-bold");
                 if (count == 0) label.AddToClassList("t-muted");
                 pick.Add(label);
-
-                if (selected)
-                {
-                    var check = new Label("✓");
-                    check.AddToClassList("t-bold");
-                    check.AddToClassList("t-md");
-                    check.AddToClassList("selected-check");
-                    pick.Add(check);
-                }
 
                 if (count > 0)
                 {

@@ -1,11 +1,13 @@
+using System;
 using Cultivation.Data;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Cultivation.Systems
 {
     /// <summary>
     /// 게임 전체 진입점. 모든 매니저의 인스턴스를 보유하고, Tick이 필요한 매니저(Farm, Breeding)를 Update에서 호출한다.
-    /// 싱글톤 정적 참조는 사용하지 않으며, 다른 컴포넌트는 Scene에서 GameManager 참조를 직접 받아야 한다.
+    /// 추가로 UI 모드 전환을 관리하여 플레이어/카메라/상호작용 입력을 차단한다.
     /// </summary>
     public class GameManager : MonoBehaviour
     {
@@ -34,6 +36,9 @@ namespace Cultivation.Systems
         public ExpansionConfig ExpansionConfig => _expansionConfig;
         public GameDataRegistry DataRegistry => _dataRegistry;
 
+        public bool IsUIModeActive { get; private set; }
+        public event Action<bool> OnUIModeChanged;
+
         private void Awake()
         {
             if (_gachaConfig == null) Debug.LogError("[GameManager] GachaConfig가 할당되지 않았습니다.");
@@ -49,11 +54,37 @@ namespace Cultivation.Systems
             Breeding = new BreedingManager(Barn, _dataRegistry, _selfCloneTime);
         }
 
+        private void Start()
+        {
+            ApplyCursor(false);
+        }
+
         private void Update()
         {
             float dt = Time.deltaTime;
             Farm?.Tick(dt);
             Breeding?.Tick(dt);
+
+            var kb = Keyboard.current;
+            if (kb != null && kb.escapeKey.wasPressedThisFrame && IsUIModeActive)
+            {
+                SetUIModeActive(false);
+            }
+        }
+
+        /// <summary>UI 모드 활성/해제. 활성 시 커서 잠금 해제 + 표시, 해제 시 커서 잠금 + 숨김.</summary>
+        public void SetUIModeActive(bool active)
+        {
+            if (IsUIModeActive == active) return;
+            IsUIModeActive = active;
+            ApplyCursor(active);
+            OnUIModeChanged?.Invoke(active);
+        }
+
+        private static void ApplyCursor(bool uiActive)
+        {
+            Cursor.lockState = uiActive ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = uiActive;
         }
     }
 }

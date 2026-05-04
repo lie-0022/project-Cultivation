@@ -312,6 +312,7 @@ namespace Cultivation.UI
                     nameLabel.AddToClassList("t-bold");
                     nameLabel.AddToClassList("t-md");
                     nameLabel.AddToClassList("creature-name");
+                    if (isSelectedForBreed) nameLabel.style.flexGrow = 0; // 체크가 이름 바로 옆에 붙도록
                     card.Add(nameLabel);
 
                     if (isSelectedForBreed)
@@ -390,6 +391,15 @@ namespace Cultivation.UI
                 label.AddToClassList("t-sm");
                 if (count == 0) label.AddToClassList("t-muted");
                 pick.Add(label);
+
+                if (selected)
+                {
+                    var check = new Label("✓");
+                    check.AddToClassList("t-bold");
+                    check.AddToClassList("t-md");
+                    check.AddToClassList("selected-check");
+                    pick.Add(check);
+                }
 
                 if (count > 0)
                 {

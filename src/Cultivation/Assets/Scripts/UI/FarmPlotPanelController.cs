@@ -25,6 +25,7 @@ namespace Cultivation.UI
         private Label _growingTitle;
         private Label _growingTimeLeft;
         private VisualElement _progressFill;
+        private VisualElement _growingArt;
 
         // Ready 모드
         private Label _readySubLabel;
@@ -56,6 +57,7 @@ namespace Cultivation.UI
             _growingTitle = _growingMode?.Q<Label>(className: "mode-prompt");
             _growingTimeLeft = _growingMode?.Q<Label>(className: "mode-sub");
             _progressFill = _growingMode?.Q<VisualElement>(className: "progress-fill");
+            _growingArt = _growingMode?.Q<VisualElement>(className: "growing-art")?.Q<VisualElement>(className: "pic-big");
 
             _readySubLabel = _readyMode?.Q<Label>(className: "mode-sub");
             _harvestBtn = _readyMode?.Q<Button>();
@@ -134,7 +136,24 @@ namespace Cultivation.UI
             RefreshExpandRow();
 
             if (plot.State == PlotState.Empty) RebuildSeedList();
+            if (plot.State == PlotState.Growing) RefreshGrowingMode(plot);
             if (plot.State == PlotState.Ready) RefreshReadyMode(plot);
+        }
+
+        private void RefreshGrowingMode(Runtime.FarmPlot plot)
+        {
+            if (plot.CurrentSeed == null || _gm == null) return;
+            var crop = _gm.DataRegistry.FindCrop(plot.CurrentSeed.ResultCropId);
+            string cropName = crop != null ? crop.CropName : plot.CurrentSeed.SeedName;
+            if (_growingTitle != null) _growingTitle.text = $"{cropName} 자라는 중…";
+
+            if (_growingArt != null)
+            {
+                var classes = new System.Collections.Generic.List<string>(_growingArt.GetClasses());
+                foreach (var cls in classes)
+                    if (cls.StartsWith("pic-big--")) _growingArt.RemoveFromClassList(cls);
+                _growingArt.AddToClassList($"pic-big--{SeedIdToArtKey(plot.CurrentSeed.SeedId)}");
+            }
         }
 
         private void SetMode(PlotState state)

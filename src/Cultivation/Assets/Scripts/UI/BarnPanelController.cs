@@ -215,6 +215,13 @@ namespace Cultivation.UI
                 foreach (var el in _bodyHideables) SetDisplay(el, !locked);
             if (_lockedHint != null)
                 _lockedHint.style.display = locked ? DisplayStyle.Flex : DisplayStyle.None;
+
+            // 잠금 해제 상태일 때는 탭 종속 영역의 가시성을 다시 적용 (위에서 일괄 표시한 걸 정정)
+            if (!locked)
+            {
+                SetDisplay(_convertRow, _currentTab == BarnTab.Convert);
+                SetDisplay(_breedActionRow, _currentTab == BarnTab.Breed);
+            }
         }
 
         private void Refresh()

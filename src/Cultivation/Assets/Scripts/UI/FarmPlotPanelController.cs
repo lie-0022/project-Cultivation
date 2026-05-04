@@ -174,7 +174,6 @@ namespace Cultivation.UI
 
         private void SetMode(PlotState state)
         {
-            Debug.Log($"[FarmPanel] SetMode={state} | empty={_emptyMode!=null} growing={_growingMode!=null} ready={_readyMode!=null}");
             SetDisplay(_emptyMode, state == PlotState.Empty);
             SetDisplay(_growingMode, state == PlotState.Growing);
             SetDisplay(_readyMode, state == PlotState.Ready);
@@ -263,11 +262,7 @@ namespace Cultivation.UI
         private void OnPlant(string seedId)
         {
             if (_plotIndex < 0 || _gm == null) return;
-            int before = _gm.Inventory.GetSeedCount(seedId);
-            bool ok = _gm.Farm.PlantSeed(_plotIndex, seedId);
-            int after = _gm.Inventory.GetSeedCount(seedId);
-            var plot = _gm.Farm.Plots[_plotIndex];
-            Debug.Log($"[FarmPanel] OnPlant seed={seedId} plot={_plotIndex} ok={ok} count {before}→{after} state={plot.State}");
+            _gm.Farm.PlantSeed(_plotIndex, seedId);
         }
 
         private void OnHarvest()
@@ -285,7 +280,6 @@ namespace Cultivation.UI
 
         private void OnPlotStateChanged(int idx, PlotState state)
         {
-            Debug.Log($"[FarmPanel] OnPlotStateChanged received idx={idx} state={state} (panel _plotIndex={_plotIndex})");
             if (idx != _plotIndex) return;
             Refresh();
         }

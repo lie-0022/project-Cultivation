@@ -1081,7 +1081,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6c0ab186c1f01846b90cddcb68865a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cultivation.Systems.GameManager
-  _startingGold: 200
+  _startingGold: 10000
   _startingFarmPlots: 2
   _startingBarnSlots: 2
   _selfCloneTime: 30

@@ -77,6 +77,47 @@
 
 .creature-card--busy { opacity: 0.7; }
 
+/* ---------- 탭 안내문 ---------- */
+.tab-instruction {
+    color: var(--color-text-muted);
+    background-color: var(--color-bg-cream);
+    padding: 10px 18px;
+    margin: 0 28px;
+    border-radius: 8px;
+    -unity-text-align: middle-left;
+}
+
+/* ---------- 슬롯 카드 상태 (탭별) ---------- */
+.creature-card--selectable {
+    border-color: var(--color-accent-barn);
+    border-width: 2px;
+}
+.creature-card--selected {
+    border-color: var(--color-accent-farm);
+    border-width: 3px;
+    background-color: rgba(107, 68, 35, 0.08);
+}
+.creature-card--empty-emph {
+    border-style: solid;
+    border-width: 2px;
+    border-color: var(--color-accent-barn);
+    background-color: rgba(107, 68, 35, 0.06);
+}
+.selected-check {
+    -unity-font-style: bold;
+    color: var(--color-accent-farm);
+    margin-left: 6px;
+}
+
+/* ---------- 교배 시작 행 ---------- */
+.breed-action-row {
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 12px;
+    margin-bottom: 4px;
+}
+.breed-action-row .btn { min-width: 220px; }
+
 .creature-name { flex-grow: 1; margin-left: 12px; color: var(--color-text-primary); }
 .creature-sub { margin-left: 12px; }
 

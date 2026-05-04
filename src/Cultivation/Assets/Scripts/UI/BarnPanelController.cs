@@ -49,6 +49,10 @@ namespace Cultivation.UI
         private System.Collections.Generic.List<VisualElement> _bodyHideables;
         private Label _lockedHint;
 
+        // 탭별 안내문 + 교배 시작 행
+        private Label _tabInstruction;
+        private VisualElement _breedActionRow;
+
         private BarnTab _currentTab = BarnTab.Convert;
         private GameManager _gm;
         private int _clickedSlotIndex = -1;
@@ -79,13 +83,13 @@ namespace Cultivation.UI
             _convertRow = root.Q<VisualElement>(className: "convert-row");
             _convertBtn = _convertRow?.Q<Button>();
 
-            // 교배 시작 버튼 — 초기엔 없으므로 동적으로 생성
-            _breedStartBtn = new Button(OnBreedStart);
-            _breedStartBtn.text = "교배 시작";
-            _breedStartBtn.AddToClassList("btn");
-            _breedStartBtn.AddToClassList("btn--barn");
-            _breedStartBtn.AddToClassList("btn--small");
-            _breedStartBtn.SetEnabled(false);
+            // 탭별 안내문
+            _tabInstruction = root.Q<Label>("TabInstruction");
+
+            // 교배 시작 행 — UXML에 고정 위치
+            _breedActionRow = root.Q<VisualElement>("BreedActionRow");
+            _breedStartBtn = root.Q<Button>("BreedStartBtn");
+            _breedStartBtn?.RegisterCallback<ClickEvent>(_ => OnBreedStart());
 
             // 활성 교배 영역
             _activeBreedSection = root.Q<VisualElement>(className: "active-breed");
@@ -193,8 +197,9 @@ namespace Cultivation.UI
 
             // 탭에 따라 콘텐츠 영역 가시성 조정 — 잠금 모드일 때는 Refresh가 다시 모두 숨김.
             SetDisplay(_convertRow, tab == BarnTab.Convert);
-            if (_breedStartBtn.parent != null && tab != BarnTab.Breed)
-                _breedStartBtn.RemoveFromHierarchy();
+            SetDisplay(_breedActionRow, tab == BarnTab.Breed);
+            // 교배 탭 떠나면 선택 상태 초기화
+            if (tab != BarnTab.Breed) { _breedSelectA = null; _breedSelectB = null; }
 
             Refresh();
         }
@@ -205,11 +210,11 @@ namespace Cultivation.UI
         private void ApplyLockedVisibility(bool locked)
         {
             SetDisplay(_tabBar, !locked);
+            SetDisplay(_tabInstruction, !locked);
             if (_bodyHideables != null)
                 foreach (var el in _bodyHideables) SetDisplay(el, !locked);
             if (_lockedHint != null)
                 _lockedHint.style.display = locked ? DisplayStyle.Flex : DisplayStyle.None;
-            if (locked && _breedStartBtn?.parent != null) _breedStartBtn.RemoveFromHierarchy();
         }
 
         private void Refresh()
@@ -227,10 +232,33 @@ namespace Cultivation.UI
 
             if (_titleLabel != null) _titleLabel.text = "사육장";
 
+            RefreshTabInstruction();
             RebuildSlotGrid();
             if (_currentTab == BarnTab.Convert) RebuildConvertRow();
             else if (_currentTab == BarnTab.Breed) RebuildBreedTab();
             else if (_currentTab == BarnTab.Sell) RebuildSellTab();
+        }
+
+        private void RefreshTabInstruction()
+        {
+            if (_tabInstruction == null || _gm == null) return;
+            int total = _gm.Barn.Slots.Count;
+            int free = 0, occupied = 0;
+            foreach (var s in _gm.Barn.Slots) { if (s.IsEmpty) free++; else occupied++; }
+
+            switch (_currentTab)
+            {
+                case BarnTab.Convert:
+                    _tabInstruction.text = $"작물을 골라 빈 슬롯에 새 크리처를 만듭니다 — 빈 슬롯 {free}/{total}";
+                    break;
+                case BarnTab.Breed:
+                    int selected = (string.IsNullOrEmpty(_breedSelectA) ? 0 : 1) + (string.IsNullOrEmpty(_breedSelectB) ? 0 : 1);
+                    _tabInstruction.text = $"부모로 쓸 크리처 2마리를 선택하세요 — {selected}/2 선택됨";
+                    break;
+                case BarnTab.Sell:
+                    _tabInstruction.text = $"팔 크리처를 선택해 골드로 환전합니다 — 보유 크리처 {occupied}";
+                    break;
+            }
         }
 
         private void RebuildSlotGrid()
@@ -248,7 +276,8 @@ namespace Cultivation.UI
                     var card = new VisualElement();
                     card.AddToClassList("creature-card");
                     card.AddToClassList("creature-card--empty");
-                    var emptyLabel = new Label("비어 있음");
+                    if (_currentTab == BarnTab.Convert) card.AddToClassList("creature-card--empty-emph");
+                    var emptyLabel = new Label(_currentTab == BarnTab.Convert ? "여기 생성됩니다" : "비어 있음");
                     emptyLabel.AddToClassList("t-medium");
                     emptyLabel.AddToClassList("t-sm");
                     emptyLabel.AddToClassList("empty-text");
@@ -270,6 +299,8 @@ namespace Cultivation.UI
                     card.AddToClassList("creature-card");
                     card.AddToClassList($"creature-card--{artKey}");
                     if (busy) card.AddToClassList("creature-card--busy");
+                    if (_currentTab == BarnTab.Breed && !busy && !isSelectedForBreed)
+                        card.AddToClassList("creature-card--selectable");
                     if (isSelectedForBreed) card.AddToClassList("creature-card--selected");
 
                     var art = new VisualElement();
@@ -282,6 +313,15 @@ namespace Cultivation.UI
                     nameLabel.AddToClassList("t-md");
                     nameLabel.AddToClassList("creature-name");
                     card.Add(nameLabel);
+
+                    if (isSelectedForBreed)
+                    {
+                        var check = new Label("✓");
+                        check.AddToClassList("t-bold");
+                        check.AddToClassList("t-md");
+                        check.AddToClassList("selected-check");
+                        card.Add(check);
+                    }
 
                     if (busy)
                     {
@@ -384,19 +424,11 @@ namespace Cultivation.UI
 
         private void RebuildBreedTab()
         {
-            // 슬롯 그리드 클릭으로 교배 부모 선택 → 버튼 삽입
-            // 브리드 시작 버튼을 convertRow 자리에 놓기
             SetDisplay(_convertRow, false);
 
             bool canBreed = !string.IsNullOrEmpty(_breedSelectA) && !string.IsNullOrEmpty(_breedSelectB);
-            _breedStartBtn.SetEnabled(canBreed);
-            _breedStartBtn.EnableInClassList("btn--disabled", !canBreed);
-
-            if (_breedStartBtn.parent == null && _barnGrid?.parent != null)
-            {
-                // 그리드 다음에 버튼 삽입
-                _barnGrid.parent.Add(_breedStartBtn);
-            }
+            _breedStartBtn?.SetEnabled(canBreed);
+            _breedStartBtn?.EnableInClassList("btn--disabled", !canBreed);
         }
 
         private void RebuildSellTab()
@@ -447,6 +479,7 @@ namespace Cultivation.UI
 
             RebuildSlotGrid();
             RebuildBreedTab();
+            RefreshTabInstruction();
         }
 
         private void OnBreedStart()

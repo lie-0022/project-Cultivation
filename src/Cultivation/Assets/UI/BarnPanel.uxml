@@ -27,10 +27,13 @@
 
             <!-- 탭 바 -->
             <VisualElement class="tab-bar">
-                <Button text="크리처화" class="tab tab--active" />
-                <Button text="교배" class="tab" />
-                <Button text="판매" class="tab" />
+                <Button text="🐣 크리처화" class="tab tab--active" />
+                <Button text="💞 교배" class="tab" />
+                <Button text="💰 판매" class="tab" />
             </VisualElement>
+
+            <!-- 탭별 안내 -->
+            <Label name="TabInstruction" text="" class="tab-instruction t-medium t-sm" />
 
             <!-- 본문 -->
             <VisualElement class="panel-body barn-body">
@@ -103,6 +106,11 @@
                         </VisualElement>
                     </VisualElement>
                     <Button text="취소" class="btn btn--ghost btn--small btn--cancel" />
+                </VisualElement>
+
+                <!-- 교배 시작 행 (교배 탭 활성 시만 표시) -->
+                <VisualElement name="BreedActionRow" class="breed-action-row" style="display:none;">
+                    <Button name="BreedStartBtn" text="교배 시작" class="btn btn--barn" />
                 </VisualElement>
 
                 <!-- 크리처화 작업 영역 -->

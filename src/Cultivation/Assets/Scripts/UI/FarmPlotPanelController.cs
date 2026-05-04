@@ -75,12 +75,17 @@ namespace Cultivation.UI
             _harvestBtn?.RegisterCallback<ClickEvent>(_ => OnHarvest());
 
             gm.Farm.OnPlotStateChanged += OnPlotStateChanged;
+            gm.Farm.OnFarmExpanded += OnFarmExpanded;
         }
 
         private void OnDestroy()
         {
-            if (_gm != null) _gm.Farm.OnPlotStateChanged -= OnPlotStateChanged;
+            if (_gm == null) return;
+            _gm.Farm.OnPlotStateChanged -= OnPlotStateChanged;
+            _gm.Farm.OnFarmExpanded -= OnFarmExpanded;
         }
+
+        private void OnFarmExpanded(int _) => Refresh();
 
         public void Open(int plotIndex)
         {
@@ -129,11 +134,22 @@ namespace Cultivation.UI
         {
             if (_plotIndex < 0 || _gm == null) return;
             var plots = _gm.Farm.Plots;
-            if (_plotIndex >= plots.Count) return;
-            var plot = plots[_plotIndex];
-
-            SetMode(plot.State);
             RefreshExpandRow();
+
+            // 잠긴 plot: 3개 모드 모두 숨기고 타이틀에 잠금 표시
+            if (_plotIndex >= plots.Count)
+            {
+                SetDisplay(_emptyMode, false);
+                SetDisplay(_growingMode, false);
+                SetDisplay(_readyMode, false);
+                if (_titleLabel != null)
+                    _titleLabel.text = $"밭 ({_plotIndex + 1}번 칸 — 잠김)";
+                return;
+            }
+
+            if (_titleLabel != null) _titleLabel.text = $"밭 ({_plotIndex + 1}번 칸)";
+            var plot = plots[_plotIndex];
+            SetMode(plot.State);
 
             if (plot.State == PlotState.Empty) RebuildSeedList();
             if (plot.State == PlotState.Growing) RefreshGrowingMode(plot);

@@ -1,6 +1,6 @@
 ---
 name: unity-csharp
-description: "Unity 6.3 C# 스크립팅 전문가. Cultivation 프로젝트의 실제 컨벤션(네임스페이스 미사용, _camelCase + [SerializeField], I-prefix 인터페이스, 한국어 XML 주석)을 따라 게임 로직 .cs 파일을 작성/수정한다. New Input System 우선, MonoBehaviour 라이프사이클 정확 활용, public 필드 금지, Update GetComponent 캐싱."
+description: "Unity 6.3 C# 스크립팅 전문가. Cultivation 프로젝트의 실제 컨벤션(`Cultivation.<도메인>` 네임스페이스, _camelCase + [SerializeField], I-prefix 인터페이스, 한국어 XML 주석)을 따라 게임 로직 .cs 파일을 작성/수정한다. New Input System 우선, MonoBehaviour 라이프사이클 정확 활용, public 필드 금지, Update GetComponent 캐싱."
 tools: Read, Glob, Grep, Write, Edit, Bash
 model: sonnet
 maxTurns: 20
@@ -79,7 +79,7 @@ Reset (Editor) → Awake → OnEnable → Start → FixedUpdate (loop) → Updat
 - [ ] MonoBehaviour 라이프사이클 메서드명 철자 정확한가? (`Awake`, `OnEnable`, `Start` 등)
 - [ ] New Input System API 정확한가? (`InputAction`, `InputActionAsset`, `InputActionMap`)
 - [ ] 환각 클래스/메서드 (예: `MonoBehaviour.Tick()`, `Component.Initialize()`) 사용 안 했는가?
-- [ ] Cultivation 컨벤션 (네임스페이스 미사용, `_camelCase`, I-prefix) 위반 없는가?
+- [ ] Cultivation 컨벤션 (`Cultivation.<도메인>` 네임스페이스, `_camelCase`, I-prefix) 위반 없는가?
 
 ## 메모리 정리 규칙
 

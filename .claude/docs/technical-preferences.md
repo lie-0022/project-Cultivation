@@ -30,6 +30,7 @@
 - **Files**: PascalCase matching class (e.g., `PlayerController.cs`)
 - **Scenes/Prefabs**: PascalCase (e.g., `PlayerCharacter.prefab`)
 - **Constants**: PascalCase or UPPER_SNAKE_CASE (e.g., `MaxHealth` / `MAX_HEALTH`)
+- **Namespaces**: `Cultivation.<도메인>` (e.g., `Cultivation.Gameplay`, `Cultivation.UI`) — Unity 패키지 동명 클래스 충돌 방지 (2026-05-04 결정)
 
 ## Performance Budgets
 

@@ -21,7 +21,10 @@
 - public 프로퍼티: PascalCase
 - 메서드: PascalCase
 - 이벤트: `On` + PascalCase (예: `OnPlayerDied`, `OnGameStateChanged`)
-- 네임스페이스: 사용 안 함
+- 네임스페이스: **`Cultivation.<도메인>` 사용** (예: `Cultivation.Gameplay`, `Cultivation.UI`, `Cultivation.Data`)
+  - 변경 사유: Unity 패키지(특히 Visual Scripting)의 동명 클래스와 충돌 방지 — `PlayerController`, `GameManager` 같은 흔한 이름이 패키지에 이미 존재
+  - 도메인 분류: `Gameplay` / `UI` / `Data` / `Systems` / `Combat` / `Editor` 등
+  - 파일 폴더 구조도 도메인 매칭: `Assets/Scripts/Player/PlayerController.cs` → `namespace Cultivation.Gameplay`
 
 ---
 
